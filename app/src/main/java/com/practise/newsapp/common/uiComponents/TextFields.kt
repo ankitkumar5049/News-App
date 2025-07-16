@@ -34,8 +34,10 @@ import com.practise.newsapp.common.utils.CommonUtilities
 import com.practise.newsapp.common.utils.Constants
 import com.practise.newsapp.ui.theme.BluePrimary
 import com.practise.newsapp.ui.theme.NewsAppTheme
+import com.practise.newsapp.ui.theme.NewsAppTheme.customColors
 import com.practise.newsapp.ui.theme.NewsAppTheme.dimens
 import com.practise.newsapp.ui.theme.OsloGray
+import com.practise.newsapp.ui.theme.Purple80
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -114,7 +116,7 @@ fun CommonTextInputFields(
                     .border(
                         width = dimens.x_1_dp,
                         color = borderColor
-                            ?: if (isFocused) MaterialTheme.colorScheme.primary else Color.White,
+                            ?: if (isFocused) customColors.border else Color.Transparent,
                         shape = RoundedCornerShape(dimens.x_4_dp)
                     )
                     .then(modifier)
@@ -162,4 +164,21 @@ fun CommonTextInputFields(
             )
         }
     }
+}
+
+@Composable
+fun HeadingText(
+    inputText: String,
+    modifier: Modifier = Modifier,
+    textColor: Color
+){
+    Text(
+        text = inputText,
+        style = LocalTextStyle.current.copy(
+            fontWeight = FontWeight.Bold,
+            fontSize = NewsAppTheme.fontSizes.x_42_0,
+        ),
+        color = textColor,
+        modifier = modifier
+    )
 }

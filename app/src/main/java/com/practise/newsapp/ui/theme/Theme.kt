@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Build
 import android.provider.CalendarContract
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -17,9 +18,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import com.practise.newsapp.common.dimensions.Dimensions
+import com.practise.newsapp.common.dimensions.dimen_4xhdpi
+import com.practise.newsapp.common.dimensions.dimen_hdpi
 import com.practise.newsapp.common.dimensions.dimen_mdpi
+import com.practise.newsapp.common.dimensions.dimen_xhdpi
+import com.practise.newsapp.common.dimensions.dimen_xxhdpi
+import com.practise.newsapp.common.dimensions.dimen_xxxhdpi
+import com.practise.newsapp.common.utils.Constants.WIDTH_FOUR_EIGHTY
+import com.practise.newsapp.common.utils.Constants.WIDTH_FOUR_EIGHTY_ONE
+import com.practise.newsapp.common.utils.Constants.WIDTH_ONE_SIXTY
+import com.practise.newsapp.common.utils.Constants.WIDTH_ONE_SIXTY_ONE
+import com.practise.newsapp.common.utils.Constants.WIDTH_SIX_FORTY
+import com.practise.newsapp.common.utils.Constants.WIDTH_THREE_TWENTY
+import com.practise.newsapp.common.utils.Constants.WIDTH_THREE_TWENTY_ONE
+import com.practise.newsapp.common.utils.Constants.WIDTH_TWO_FORTY
+import com.practise.newsapp.common.utils.Constants.WIDTH_TWO_FORTY_ONE
 import com.practise.newsapp.fontSizes.FontSize
+import com.practise.newsapp.fontSizes.font_size_4xhdpi
+import com.practise.newsapp.fontSizes.font_size_hdpi
 import com.practise.newsapp.fontSizes.font_size_mdpi
+import com.practise.newsapp.fontSizes.font_size_xhdpi
+import com.practise.newsapp.fontSizes.font_size_xxhdpi
+import com.practise.newsapp.fontSizes.font_size_xxxhdpi
 
 @Composable
 fun ProvideDimens(
@@ -71,23 +91,59 @@ fun NewsAppTheme(
     content: @Composable () -> Unit
 ) {
     val configuration = LocalConfiguration.current
-    var dimension = dimen_mdpi
+    var dimensions = dimen_mdpi
     var fontSize = font_size_mdpi
 
     val colorScheme = when {
-      dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-        val context = LocalContext.current
-        if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-      }
-      darkTheme -> DarkColorScheme
-      else -> LightColorScheme
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+            val context = LocalContext.current
+            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+        }
+        darkTheme -> DarkColorScheme
+        else -> LightColorScheme
     }
 
-    MaterialTheme(
-      colorScheme = colorScheme,
-      typography = Typography,
-      content = content
-    )
+    val customColors = if (darkTheme) DarkCustomColors else LightCustomColors
+
+    if (configuration.screenWidthDp <= WIDTH_ONE_SIXTY) {
+        dimensions = dimen_mdpi
+        fontSize = font_size_mdpi
+//        typography = neoTypographyMDPI
+    } else if (configuration.screenWidthDp in (WIDTH_ONE_SIXTY_ONE..WIDTH_TWO_FORTY)) {
+        dimensions = dimen_hdpi
+        fontSize = font_size_hdpi
+//        typography = neoTypographyHDPI
+    } else if (configuration.screenWidthDp in (WIDTH_TWO_FORTY_ONE..WIDTH_THREE_TWENTY)) {
+        dimensions = dimen_xhdpi
+        fontSize = font_size_xhdpi
+//        typography = neoTypographyXHDPI
+    } else if (configuration.screenWidthDp in (WIDTH_THREE_TWENTY_ONE..WIDTH_FOUR_EIGHTY)) {
+        dimensions = dimen_xxhdpi
+        fontSize = font_size_xxhdpi
+//        typography = neoTypographyXXHDPI
+    } else if (configuration.screenWidthDp in (WIDTH_FOUR_EIGHTY_ONE..WIDTH_SIX_FORTY)){
+        dimensions = dimen_xxxhdpi
+        fontSize = font_size_xxxhdpi
+//        typography = neoTypographyXXXHDPI
+    } else if(configuration.screenWidthDp >= WIDTH_SIX_FORTY){
+        dimensions = dimen_4xhdpi
+        fontSize = font_size_4xhdpi
+//        typography = neoTypography4xHDPI
+    }
+
+    ProvideDimens(
+        dimensions = dimensions,
+        fontSizes = fontSize
+    ) {
+        CompositionLocalProvider(LocalCustomColors provides customColors) {
+            MaterialTheme(
+                colorScheme = colorScheme,
+                typography = Typography,
+                content = content
+            )
+        }
+    }
+
 }
 
 object NewsAppTheme {
@@ -96,9 +152,9 @@ object NewsAppTheme {
         @Composable
         get() = LocalAppDimens.current
 
-//    val colors: CalendarContract.Colors
-//        @Composable
-//        get() = MaterialTheme.color
+    val customColors: CustomColors
+        @Composable
+        get() = LocalCustomColors.current
 
     val fontSizes: FontSize
         @Composable

@@ -11,3 +11,14 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 val BluePrimary = Color(0xFF1877F2)
 val OsloGray = Color(0xFF828894)
+val DarkCharcoal = Color(0xFF3A3B3C)
+
+
+val TextPrimaryLight = Color(0xFF000000)
+val TextPrimaryDark = Color(0xFFFFFFFF)
+
+val BorderLight = Color.Transparent
+val BorderDark = Color(0xFFD0BCFF)
+
+val TextFieldBackgroundLight = Color(0xFFFFFFFF)
+val TextFieldBackgroundDark = Color(0xFF3A3B3C)
