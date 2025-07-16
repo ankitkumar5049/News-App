@@ -1,6 +1,7 @@
 package com.practise.newsapp.common.utils
 
 object Constants {
+    const val MAX_LINE: Int = 1
     const val EMPTY_STRING = ""
     const val ASTERISK: String = "*"
 

@@ -48,7 +48,7 @@ object CommonUtilities {
         activity.window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
     }
 
-    fun trimStartSpaces(input: String): String {
-        return input.trimStart()
+    fun trimSpaces(input: String): String {
+        return input.trim()
     }
 }
