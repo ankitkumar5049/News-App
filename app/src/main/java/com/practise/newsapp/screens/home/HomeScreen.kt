@@ -1,4 +1,4 @@
-package com.practise.newsapp.home
+package com.practise.newsapp.screens.home
 
 import androidx.compose.runtime.Composable
 

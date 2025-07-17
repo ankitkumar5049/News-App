@@ -1,4 +1,4 @@
-package com.practise.newsapp.register.login
+package com.practise.newsapp.screens.register.login
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,8 +18,8 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,7 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.practise.newsapp.common.dimensions.dimen_mdpi
 import com.practise.newsapp.common.uiComponents.CommonButton
@@ -37,26 +36,49 @@ import com.practise.newsapp.common.uiComponents.CommonTextField
 import com.practise.newsapp.common.uiComponents.CommonTextInputFields
 import com.practise.newsapp.common.uiComponents.HeadingText
 import com.practise.newsapp.common.uiComponents.SubHeadingText
+import com.practise.newsapp.common.utils.CommonContentDescription
+import com.practise.newsapp.common.utils.CommonString
+import com.practise.newsapp.navigation.NavigationItem
 import com.practise.newsapp.ui.theme.NewsAppTheme
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
 
 @Composable
-fun LoginScreen(){
-
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+fun LoginScreen(
+    viewModel: LoginViewModel,
+    navigate: (String, Boolean, String?, Boolean) -> Unit,
+) {
     var showPassword by remember { mutableStateOf(false) }
-    var checked by remember { mutableStateOf(true) }
+
+    LaunchedEffect(viewModel.effects.receiveAsFlow()) {
+        viewModel.effects.receiveAsFlow().onEach { effect ->
+            when (effect) {
+                LoginContract.Effect.LaunchHomeScreen -> TODO()
+                LoginContract.Effect.LaunchForgotPasswordScreen -> TODO()
+                LoginContract.Effect.LaunchSignUpScreen -> {
+                    navigate(
+                        NavigationItem.Signup.route,
+                        true,
+                        NavigationItem.Login.route,
+                        true
+                    )
+                }
+            }
+        }
+    }
+
     Box {
         Scaffold { innerPadding ->
-            Column (Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(start = 16.dp, end = 16.dp)
+            Column (
+                Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .padding(start = 16.dp, end = 16.dp)
             ){
 
 
                 HeadingText(
-                    "Hello",
+                    CommonString.HELLO,
                     textColor = NewsAppTheme.customColors.textPrimary,
                     modifier = Modifier.padding(top = dimen_mdpi.x_32_dp),
                 )
@@ -64,7 +86,7 @@ fun LoginScreen(){
                 Spacer(modifier = Modifier.height(dimen_mdpi.x_1_25))
 
                 HeadingText(
-                    "Again!",
+                    CommonString.AGAIN,
                     textColor = NewsAppTheme.customColors.primary,
                     modifier = Modifier.padding(top = dimen_mdpi.x_32_dp),
                 )
@@ -72,32 +94,36 @@ fun LoginScreen(){
                 Spacer(modifier = Modifier.height(dimen_mdpi.x_1_25))
 
                 SubHeadingText(
-                    inputText = "Welcome back you've \nbeen missed"
+                    inputText = CommonString.WELCOME_BACK
                 )
 
                 Spacer(modifier = Modifier.height(dimen_mdpi.x_6_0))
 
                 CommonTextInputFields(
-                    value = username,
+                    value = viewModel.state.username,
                     onValueChange = {
-                        username = it
+                        viewModel.state = viewModel.state.copy(
+                            username = it
+                        )
                     },
-                    labelString = "Username",
-                    semanticName = "Username",
+                    labelString = CommonString.USERNAME,
+                    semanticName = CommonString.USERNAME,
                     maxChar = 20,
                     labelAsteriskRequired = true,
-                    borderColor = if(username.length in 1..3) Color.Red else NewsAppTheme.customColors.border,
+                    borderColor = if(viewModel.state.username.length in 1..3) Color.Red else NewsAppTheme.customColors.border,
                 )
 
                 Spacer(modifier = Modifier.height(dimen_mdpi.x_1_25))
 
                 CommonTextInputFields(
-                    value = password,
+                    value = viewModel.state.password,
                     onValueChange = {
-                        password = it
+                        viewModel.state = viewModel.state.copy(
+                            password = it
+                        )
                     },
-                    labelString = "Password",
-                    semanticName = "Password",
+                    labelString = CommonString.PASSWORD,
+                    semanticName = CommonString.PASSWORD,
                     maxChar = 20,
                     labelAsteriskRequired = true,
                     trailingIcon = {
@@ -108,14 +134,15 @@ fun LoginScreen(){
                             } else {
                                 Icons.Filled.VisibilityOff
                             },
-                            contentDescription = "Toggle password visibility",
+                            contentDescription = CommonContentDescription.TOGGLE_PASSWORD_VISIBILITY,
                             modifier = Modifier
-                                .requiredSize(48.dp).padding(16.dp)
+                                .requiredSize(48.dp)
+                                .padding(16.dp)
                                 .clickable { showPassword = !showPassword }
                         )
                     },
                     enforceVisualTransformation = true,
-                    borderColor = if(password.length in 1..3) Color.Red else NewsAppTheme.customColors.border,
+                    borderColor = if(viewModel.state.password.length in 1..3) Color.Red else NewsAppTheme.customColors.border,
                     visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
                 )
 
@@ -133,8 +160,12 @@ fun LoginScreen(){
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Start) {
                         Checkbox(
-                            checked = checked,
-                            onCheckedChange = { checked = it },
+                            checked = viewModel.state.rememberMe,
+                            onCheckedChange = {
+                                viewModel.state = viewModel.state.copy(
+                                    rememberMe = !viewModel.state.rememberMe
+                                )
+                                              },
                             colors = CheckboxDefaults.colors(
                                 checkedColor = NewsAppTheme.customColors.primary,
                                 uncheckedColor = NewsAppTheme.customColors.primary,
@@ -144,25 +175,49 @@ fun LoginScreen(){
                         )
 
                         CommonTextField(
-                            inputText = "Remember me",
+                            inputText = CommonString.REMEMBER_ME,
                             modifier = Modifier
                         )
                     }
 
                     CommonTextField(
                         modifier = Modifier,
-                        inputText = "Forgot the Password?",
+                        inputText = CommonString.FORGOT_THE_PASSWORD,
                         isLink = true,
                     )
 
                 }
                 CommonButton(
                     modifier = Modifier.fillMaxWidth(),
-                    text = "Login",
+                    text = CommonString.LOGIN,
                     buttonModifier = Modifier
                         .padding(bottom = dimen_mdpi.x_32_dp),
-                    onClick = { /*TODO*/ }
+                    onClick = {
+                        navigate(
+                            NavigationItem.Signup.route,
+                            true,
+                            null,
+                            true
+                        )
+                    }
                 )
+
+                Row (
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ){
+                    CommonTextField(
+                        inputText = CommonString.DONT_HAVE_AN_ACCOUNT,
+                        modifier = Modifier
+                    )
+                    Spacer(modifier = Modifier.padding(dimen_mdpi.x_0_75))
+
+                    CommonTextField(
+                        inputText = CommonString.SIGN_UP,
+                        isLink = true,
+                        modifier = Modifier
+                    )
+                }
             }
         }
     }

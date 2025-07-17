@@ -1,4 +1,4 @@
-package com.practise.newsapp.register.login
+package com.practise.newsapp.screens.register.login
 
 import com.practise.newsapp.common.utils.Constants
 
@@ -11,4 +11,11 @@ class LoginContract{
         val rememberMe: Boolean = true,
 
     )
+
+    sealed class Effect{
+        object LaunchSignUpScreen : Effect()
+        object LaunchHomeScreen : Effect()
+        object LaunchForgotPasswordScreen : Effect()
+
+    }
 }

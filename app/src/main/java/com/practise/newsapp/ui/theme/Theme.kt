@@ -33,13 +33,13 @@ import com.practise.newsapp.common.utils.Constants.WIDTH_THREE_TWENTY
 import com.practise.newsapp.common.utils.Constants.WIDTH_THREE_TWENTY_ONE
 import com.practise.newsapp.common.utils.Constants.WIDTH_TWO_FORTY
 import com.practise.newsapp.common.utils.Constants.WIDTH_TWO_FORTY_ONE
-import com.practise.newsapp.fontSizes.FontSize
-import com.practise.newsapp.fontSizes.font_size_4xhdpi
-import com.practise.newsapp.fontSizes.font_size_hdpi
-import com.practise.newsapp.fontSizes.font_size_mdpi
-import com.practise.newsapp.fontSizes.font_size_xhdpi
-import com.practise.newsapp.fontSizes.font_size_xxhdpi
-import com.practise.newsapp.fontSizes.font_size_xxxhdpi
+import com.practise.newsapp.common.fontSizes.FontSize
+import com.practise.newsapp.common.fontSizes.font_size_4xhdpi
+import com.practise.newsapp.common.fontSizes.font_size_hdpi
+import com.practise.newsapp.common.fontSizes.font_size_mdpi
+import com.practise.newsapp.common.fontSizes.font_size_xhdpi
+import com.practise.newsapp.common.fontSizes.font_size_xxhdpi
+import com.practise.newsapp.common.fontSizes.font_size_xxxhdpi
 
 @Composable
 fun ProvideDimens(
@@ -64,6 +64,7 @@ private val DarkColorScheme = darkColorScheme(
     secondary = PurpleGrey80,
     tertiary = Pink80,
     onPrimary = Color.White,
+    background = Color.Black
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -71,6 +72,7 @@ private val LightColorScheme = lightColorScheme(
     secondary = PurpleGrey40,
     tertiary = Pink40,
     onPrimary = Color.Black,
+    background = Color.White
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),

@@ -1,4 +1,4 @@
-package com.practise.newsapp.fontSizes
+package com.practise.newsapp.common.fontSizes
 
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
