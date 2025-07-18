@@ -6,6 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.practise.newsapp.screens.register.forgotPassword.ForgotPasswordScreen
 import com.practise.newsapp.screens.register.login.LoginScreen
 import com.practise.newsapp.screens.register.login.LoginViewModel
 import com.practise.newsapp.screens.register.signup.SignupScreen
@@ -16,7 +17,7 @@ import com.practise.newsapp.screens.register.signup.SignupViewModel
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = NavigationItem.Login.route,
+    startDestination: String = NavigationItem.ForgotPassword.route,
 ) {
     NavHost(
         modifier = modifier,
@@ -38,6 +39,10 @@ fun AppNavHost(
                 viewModel = viewModel,
                 navigate = navController::navigateWithOptionalPopUp,
             )
+        }
+
+        composable(NavigationItem.ForgotPassword.route) {
+            ForgotPasswordScreen()
         }
     }
 }

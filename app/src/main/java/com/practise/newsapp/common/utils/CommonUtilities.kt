@@ -10,6 +10,7 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import java.util.regex.Pattern
 
 object CommonUtilities {
 
@@ -50,5 +51,17 @@ object CommonUtilities {
 
     fun trimSpaces(input: String): String {
         return input.trim()
+    }
+
+    fun onlyAlphaValidation(input: String): Boolean {
+        val onlyAlphaValidation =
+            Pattern.compile(Constants.ONLY_ALPHABET_REGEX)
+        return onlyAlphaValidation.matcher(input).find()
+    }
+
+    fun onlyNumericValidation(input: String): Boolean{
+        val onlyNumericValidation =
+            Pattern.compile(Constants.ALPHA_NUMERIC_REGEX)
+        return onlyNumericValidation.matcher(input).find()
     }
 }

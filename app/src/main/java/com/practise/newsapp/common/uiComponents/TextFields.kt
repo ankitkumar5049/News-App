@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.magnifier
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -215,13 +214,12 @@ fun CommonTextInputFields(
 fun HeadingText(
     inputText: String,
     modifier: Modifier = Modifier,
-    textColor: Color
+    textColor: Color,
 ){
     Text(
         text = inputText,
-        style = LocalTextStyle.current.copy(
+        style = MaterialTheme.typography.headlineLarge.copy(
             fontWeight = FontWeight.Bold,
-            fontSize = NewsAppTheme.fontSizes.x_42_0,
         ),
         color = textColor,
         modifier = modifier

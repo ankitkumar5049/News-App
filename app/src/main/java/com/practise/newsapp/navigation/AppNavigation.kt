@@ -3,10 +3,12 @@ package com.practise.newsapp.navigation
 enum class Screen {
     HOME,
     LOGIN,
-    SIGNUP
+    SIGNUP,
+    FORGOT_PASSWORD,
 }
 sealed class NavigationItem(val route: String) {
     object Home : NavigationItem(Screen.HOME.name)
     object Login : NavigationItem(Screen.LOGIN.name)
     object Signup : NavigationItem(Screen.SIGNUP.name)
+    object ForgotPassword : NavigationItem(Screen.FORGOT_PASSWORD.name)
 }

@@ -95,6 +95,7 @@ fun NewsAppTheme(
     val configuration = LocalConfiguration.current
     var dimensions = dimen_mdpi
     var fontSize = font_size_mdpi
+    var typography = newsTypographyDisplay
 
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
@@ -110,27 +111,27 @@ fun NewsAppTheme(
     if (configuration.screenWidthDp <= WIDTH_ONE_SIXTY) {
         dimensions = dimen_mdpi
         fontSize = font_size_mdpi
-//        typography = neoTypographyMDPI
+        typography = newsTypographyDisplay
     } else if (configuration.screenWidthDp in (WIDTH_ONE_SIXTY_ONE..WIDTH_TWO_FORTY)) {
         dimensions = dimen_hdpi
         fontSize = font_size_hdpi
-//        typography = neoTypographyHDPI
+        typography = newsTypographyDisplay
     } else if (configuration.screenWidthDp in (WIDTH_TWO_FORTY_ONE..WIDTH_THREE_TWENTY)) {
         dimensions = dimen_xhdpi
         fontSize = font_size_xhdpi
-//        typography = neoTypographyXHDPI
+        typography = newsTypographyDisplay
     } else if (configuration.screenWidthDp in (WIDTH_THREE_TWENTY_ONE..WIDTH_FOUR_EIGHTY)) {
         dimensions = dimen_xxhdpi
         fontSize = font_size_xxhdpi
-//        typography = neoTypographyXXHDPI
+        typography = newsTypographyDisplay
     } else if (configuration.screenWidthDp in (WIDTH_FOUR_EIGHTY_ONE..WIDTH_SIX_FORTY)){
         dimensions = dimen_xxxhdpi
         fontSize = font_size_xxxhdpi
-//        typography = neoTypographyXXXHDPI
+        typography = newsTypographyDisplay
     } else if(configuration.screenWidthDp >= WIDTH_SIX_FORTY){
         dimensions = dimen_4xhdpi
         fontSize = font_size_4xhdpi
-//        typography = neoTypography4xHDPI
+        typography = newsTypographyDisplay
     }
 
     ProvideDimens(
@@ -140,7 +141,7 @@ fun NewsAppTheme(
         CompositionLocalProvider(LocalCustomColors provides customColors) {
             MaterialTheme(
                 colorScheme = colorScheme,
-                typography = Typography,
+                typography = typography,
                 content = content
             )
         }

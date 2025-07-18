@@ -73,7 +73,7 @@ fun LoginScreen(
                 Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .padding(start = 16.dp, end = 16.dp)
+                    .padding(start = dimen_mdpi.x_2_0, end = dimen_mdpi.x_2_0, top = dimen_mdpi.x_2_0)
             ){
 
 
@@ -193,12 +193,7 @@ fun LoginScreen(
                     buttonModifier = Modifier
                         .padding(bottom = dimen_mdpi.x_32_dp),
                     onClick = {
-                        navigate(
-                            NavigationItem.Signup.route,
-                            true,
-                            null,
-                            true
-                        )
+
                     }
                 )
 
@@ -215,7 +210,14 @@ fun LoginScreen(
                     CommonTextField(
                         inputText = CommonString.SIGN_UP,
                         isLink = true,
-                        modifier = Modifier
+                        modifier = Modifier.clickable {
+                            navigate(
+                                NavigationItem.Signup.route,
+                                true,
+                                NavigationItem.Login.route,
+                                true
+                            )
+                        }
                     )
                 }
             }
