@@ -53,6 +53,30 @@ val newsTypographyDisplay = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
         lineHeight = 36.sp
+    ),
+    bodyLarge = TextStyle( // Large
+        fontFamily = Poppins,
+        fontWeight = FontWeight.Normal,
+        fontSize = 20.sp,
+        lineHeight = 30.sp
+    ),
+    bodyMedium = TextStyle( // Medium
+        fontFamily = Poppins,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        lineHeight = 24.sp
+    ),
+    bodySmall = TextStyle( // Small
+        fontFamily = Poppins,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        lineHeight = 21.sp
+    ),
+    labelLarge = TextStyle( // X-Small
+        fontFamily = Poppins,
+        fontWeight = FontWeight.Normal,
+        fontSize = 13.sp,
+        lineHeight = 19.5.sp
     )
 )
 

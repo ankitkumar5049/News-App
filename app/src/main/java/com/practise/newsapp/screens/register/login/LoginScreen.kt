@@ -109,6 +109,7 @@ fun LoginScreen(
                     labelString = CommonString.USERNAME,
                     semanticName = CommonString.USERNAME,
                     maxChar = 20,
+                    maxLines = 1,
                     labelAsteriskRequired = true,
                     borderColor = if(viewModel.state.username.length in 1..3) Color.Red else NewsAppTheme.customColors.border,
                 )
@@ -181,7 +182,14 @@ fun LoginScreen(
                     }
 
                     CommonTextField(
-                        modifier = Modifier,
+                        modifier = Modifier.clickable {
+                            navigate(
+                                NavigationItem.ForgotPassword.route,
+                                true,
+                                null,
+                                true
+                            )
+                        },
                         inputText = CommonString.FORGOT_THE_PASSWORD,
                         isLink = true,
                     )

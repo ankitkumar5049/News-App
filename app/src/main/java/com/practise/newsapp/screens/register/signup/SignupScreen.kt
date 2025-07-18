@@ -67,7 +67,7 @@ fun SignupScreen(
                 SubHeadingText(
                     inputText = CommonString.SIGN_UP_TO_GET_STARTED
                 )
-                Spacer(modifier = Modifier.height(dimen_mdpi.x_1_25))
+                Spacer(modifier = Modifier.height(dimen_mdpi.x_6_0))
 
                 CommonTextInputFields(
                     value = viewModel.state.username,

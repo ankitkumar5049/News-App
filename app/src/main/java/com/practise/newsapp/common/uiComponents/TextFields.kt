@@ -120,7 +120,7 @@ fun CommonTextInputFields(
                     fontWeight = FontWeight.Normal,
                     fontSize = NewsAppTheme.fontSizes.x_1_25,
                 ),
-                color = labelTextColor ?: MaterialTheme.colorScheme.onSurface
+                color = labelTextColor ?: customColors.secondPrimary
             )
 
 
@@ -218,7 +218,7 @@ fun HeadingText(
 ){
     Text(
         text = inputText,
-        style = MaterialTheme.typography.headlineLarge.copy(
+        style = MaterialTheme.typography.displayLarge.copy(
             fontWeight = FontWeight.Bold,
         ),
         color = textColor,
@@ -234,9 +234,8 @@ fun SubHeadingText(
 ){
     Text(
         text = inputText,
-        style = LocalTextStyle.current.copy(
+        style = MaterialTheme.typography.bodyLarge.copy(
             fontWeight = FontWeight.Normal,
-            fontSize = NewsAppTheme.fontSizes.x_2_0,
         ),
         color = textColor,
         modifier = modifier,

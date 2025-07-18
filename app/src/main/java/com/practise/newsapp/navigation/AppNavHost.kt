@@ -7,8 +7,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.practise.newsapp.screens.register.forgotPassword.ForgotPasswordScreen
+import com.practise.newsapp.screens.register.forgotPassword.ForgotPasswordViewModel
 import com.practise.newsapp.screens.register.login.LoginScreen
 import com.practise.newsapp.screens.register.login.LoginViewModel
+import com.practise.newsapp.screens.register.resetPassword.ResetPasswordScreen
+import com.practise.newsapp.screens.register.resetPassword.ResetPasswordViewModel
 import com.practise.newsapp.screens.register.signup.SignupScreen
 import com.practise.newsapp.screens.register.signup.SignupViewModel
 
@@ -17,7 +20,7 @@ import com.practise.newsapp.screens.register.signup.SignupViewModel
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = NavigationItem.ForgotPassword.route,
+    startDestination: String = NavigationItem.Login.route,
 ) {
     NavHost(
         modifier = modifier,
@@ -42,7 +45,19 @@ fun AppNavHost(
         }
 
         composable(NavigationItem.ForgotPassword.route) {
-            ForgotPasswordScreen()
+            val viewModel : ForgotPasswordViewModel = hiltViewModel()
+            ForgotPasswordScreen(
+                viewModel = viewModel,
+                navigate = navController::navigateWithOptionalPopUp,
+            )
+        }
+
+        composable(NavigationItem.ResetPassword.route) {
+            val viewModel : ResetPasswordViewModel = hiltViewModel()
+            ResetPasswordScreen(
+                viewModel = viewModel,
+                navigate = navController::navigateWithOptionalPopUp,
+            )
         }
     }
 }

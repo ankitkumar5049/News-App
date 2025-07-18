@@ -15,6 +15,11 @@ object CommonString {
     const val ALREADY_HAVE_AN_ACCOUNT = "Already have an account?"
     const val FORGOT_PASSWORD = "Forgot \nPassword?"
     const val FORGOT_PASSWORD_DESCRIPTION = "Don’t worry! it happens. Please select the email or number associated with your account."
+    const val  EMAIL_OR_PHONE_NUMBER = "Email/Phone Number"
+    const val SUBMIT = "Submit"
+    const val VERIFY = "Verify"
+    const val OKAY = "Okay"
+    const val RESET_PASSWORD = "Reset \nPassword"
 
 
 }
