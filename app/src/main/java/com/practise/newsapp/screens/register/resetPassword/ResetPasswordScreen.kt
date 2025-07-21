@@ -1,5 +1,6 @@
 package com.practise.newsapp.screens.register.resetPassword
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -27,6 +29,7 @@ import com.practise.newsapp.common.dimensions.dimen_mdpi
 import com.practise.newsapp.common.uiComponents.CommonButton
 import com.practise.newsapp.common.uiComponents.CommonTextInputFields
 import com.practise.newsapp.common.uiComponents.HeadingText
+import com.practise.newsapp.common.uiComponents.NewsTopBar
 import com.practise.newsapp.common.utils.CommonContentDescription
 import com.practise.newsapp.common.utils.CommonString
 import com.practise.newsapp.ui.theme.NewsAppTheme
@@ -42,11 +45,16 @@ fun ResetPasswordScreen(
     var showConfirmPassword by remember { mutableStateOf(false) }
 
     Box {
-        Scaffold { innerPadding ->
+        Scaffold(
+            modifier = Modifier
+                .background(NewsAppTheme.customColors.topBar)
+                .systemBarsPadding(),
+            topBar = { NewsTopBar() }
+        ) { innerPadding ->
             Column(
                 modifier = Modifier
                     .padding(innerPadding)
-                    .padding(start = dimen_mdpi.x_2_0, end = dimen_mdpi.x_2_0, top = dimen_mdpi.x_2_0, bottom = dimen_mdpi.x_2_0)
+                    .padding(start = dimen_mdpi.x_2_0, end = dimen_mdpi.x_2_0, bottom = dimen_mdpi.x_2_0)
             ) {
                 HeadingText(
                     inputText = CommonString.RESET_PASSWORD,

@@ -20,6 +20,8 @@ object CommonString {
     const val VERIFY = "Verify"
     const val OKAY = "Okay"
     const val RESET_PASSWORD = "Reset \nPassword"
+    const val SEARCH = "Search"
+    const val SELECT_YOUR_COUNTRY = "Select your country"
 
 
 }

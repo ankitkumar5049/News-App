@@ -1,5 +1,6 @@
 package com.practise.newsapp.screens.register.forgotPassword
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,6 +17,7 @@ import com.practise.newsapp.common.dimensions.dimen_mdpi
 import com.practise.newsapp.common.uiComponents.CommonButton
 import com.practise.newsapp.common.uiComponents.CommonTextInputFields
 import com.practise.newsapp.common.uiComponents.HeadingText
+import com.practise.newsapp.common.uiComponents.NewsTopBar
 import com.practise.newsapp.common.uiComponents.SubHeadingText
 import com.practise.newsapp.common.utils.CommonString
 import com.practise.newsapp.navigation.NavigationItem
@@ -28,12 +31,17 @@ fun ForgotPasswordScreen(
 ) {
 
     Box {
-        Scaffold{ innerPadding ->
+        Scaffold(
+            modifier = Modifier
+                .background(NewsAppTheme.customColors.topBar)
+                .systemBarsPadding(),
+            topBar = { NewsTopBar() }
+        ){ innerPadding ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .padding(start = dimen_mdpi.x_2_0, end = dimen_mdpi.x_2_0, top = dimen_mdpi.x_2_0, bottom = dimen_mdpi.x_2_0)
+                    .padding(start = dimen_mdpi.x_2_0, end = dimen_mdpi.x_2_0, bottom = dimen_mdpi.x_2_0)
             ) {
                 HeadingText(
                     inputText = CommonString.FORGOT_PASSWORD,

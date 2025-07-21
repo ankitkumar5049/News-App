@@ -24,4 +24,7 @@ object Constants {
     const val NO_SPECIAL_CHAR_REGEX = "^[a-zA-Z0-9\\-\\/&().,\\s]+\$"
     const val UPPER_CHAR_REGEX = "[A-Z]"
     const val LOWER_CHAR_REGEX = "[a-z]"
+
+    const val FULL_OPACITY = 1f
+    const val HALF_OPACITY = .5f
 }

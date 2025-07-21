@@ -10,20 +10,23 @@ data class CustomColors(
     val primary: Color = BluePrimary,
     val secondPrimary: Color,
     val buttonTextPrimary: Color,
+    val topBar: Color,
 )
 
 val LightCustomColors = CustomColors(
     textPrimary = TextPrimaryLight,
     textFieldBackground = TextFieldBackgroundLight,
     secondPrimary = MutedIndigo,
-    buttonTextPrimary = Color.White
+    buttonTextPrimary = Color.White,
+    topBar = TopBarLight
 )
 
 val DarkCustomColors = CustomColors(
     textPrimary = TextPrimaryDark,
     textFieldBackground = TextFieldBackgroundDark,
     secondPrimary = LightGrey,
-    buttonTextPrimary = Color.Black
+    buttonTextPrimary = Color.Black,
+    topBar = TopBarDark
 )
 
 val LocalCustomColors = staticCompositionLocalOf { LightCustomColors }

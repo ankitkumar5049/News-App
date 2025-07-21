@@ -30,11 +30,15 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.TextUnit
 import com.practise.newsapp.common.dimensions.dimen_mdpi
 import com.practise.newsapp.common.utils.CommonUtilities
 import com.practise.newsapp.common.utils.Constants
@@ -262,5 +266,31 @@ fun CommonTextField(
         modifier = if(clickable) Modifier.clickable {
 
         } else Modifier.then(modifier)
+    )
+}
+
+@Composable
+fun SubtitleText(
+    modifier: Modifier = Modifier,
+    align: TextAlign = TextAlign.Center,
+    color: Color = NewsAppTheme.customColors.primary,
+    text: String = "",
+    ellipsis: Boolean = false,
+    lineHeight: TextUnit = TextUnit.Unspecified,
+    fontWeight: FontWeight = FontWeight.Normal,
+    style: TextStyle = MaterialTheme.typography.headlineSmall,
+    textDecoration: TextDecoration? = null
+) {
+    Text(
+        textAlign = align,
+        text = text,
+        color = color,
+        style = style,
+        overflow = if (ellipsis) TextOverflow.Ellipsis else TextOverflow.Clip,
+        maxLines = if (ellipsis) 1 else Int.MAX_VALUE,
+        lineHeight = lineHeight,
+        fontWeight = fontWeight,
+        modifier = modifier,
+        textDecoration =textDecoration
     )
 }

@@ -21,6 +21,9 @@ val MutedIndigo = Color(0xFF4E4B66)
 val TextPrimaryLight = Color(0xFF000000)
 val TextPrimaryDark = Color(0xFFFFFFFF)
 
+val TopBarLight = Color(0xFFFFFFFF)
+val TopBarDark = Color(0xFF000000)
+
 //val BorderLight = Color.Transparent
 //val BorderDark = Color(0xFFD0BCFF)
 

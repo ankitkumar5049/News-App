@@ -14,6 +14,8 @@ import com.practise.newsapp.screens.register.resetPassword.ResetPasswordScreen
 import com.practise.newsapp.screens.register.resetPassword.ResetPasswordViewModel
 import com.practise.newsapp.screens.register.signup.SignupScreen
 import com.practise.newsapp.screens.register.signup.SignupViewModel
+import com.practise.newsapp.screens.selectCountry.SelectCountryScreen
+import com.practise.newsapp.screens.selectCountry.SelectCountryViewModel
 
 
 @Composable
@@ -57,6 +59,13 @@ fun AppNavHost(
             ResetPasswordScreen(
                 viewModel = viewModel,
                 navigate = navController::navigateWithOptionalPopUp,
+            )
+        }
+
+        composable(NavigationItem.SelectCountry.route) {
+            val viewModel : SelectCountryViewModel = hiltViewModel()
+            SelectCountryScreen(
+                viewModel = viewModel,
             )
         }
     }
