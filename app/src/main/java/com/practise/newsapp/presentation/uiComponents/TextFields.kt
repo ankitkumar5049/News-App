@@ -222,7 +222,7 @@ fun HeadingText(
 ){
     Text(
         text = inputText,
-        style = MaterialTheme.typography.displayLarge.copy(
+        style = MaterialTheme.typography.displayMedium.copy(
             fontWeight = FontWeight.Bold,
         ),
         color = textColor,
@@ -238,7 +238,7 @@ fun SubHeadingText(
 ){
     Text(
         text = inputText,
-        style = MaterialTheme.typography.bodyLarge.copy(
+        style = MaterialTheme.typography.bodyMedium.copy(
             fontWeight = FontWeight.Normal,
         ),
         color = textColor,

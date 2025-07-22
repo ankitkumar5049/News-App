@@ -1,5 +1,6 @@
 package com.practise.newsapp.presentation.screens.register.signup
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,20 +30,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.practise.newsapp.common.dimensions.dimen_mdpi
+import com.practise.newsapp.common.utils.CommonContentDescription
+import com.practise.newsapp.common.utils.CommonString
+import com.practise.newsapp.navigation.NavigationItem
+import com.practise.newsapp.presentation.animations.SlideInVertically
 import com.practise.newsapp.presentation.uiComponents.CommonButton
 import com.practise.newsapp.presentation.uiComponents.CommonTextField
 import com.practise.newsapp.presentation.uiComponents.CommonTextInputFields
 import com.practise.newsapp.presentation.uiComponents.HeadingText
 import com.practise.newsapp.presentation.uiComponents.SubHeadingText
-import com.practise.newsapp.common.utils.CommonContentDescription
-import com.practise.newsapp.common.utils.CommonString
-import com.practise.newsapp.navigation.NavigationItem
-import com.practise.newsapp.presentation.animations.SlideInVertically
 import com.practise.newsapp.ui.theme.NewsAppTheme
-import kotlin.reflect.KFunction4
 
 @Composable
 fun SignupScreen(
@@ -61,6 +60,7 @@ fun SignupScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .background(NewsAppTheme.customColors.background)
                     .padding(innerPadding)
                     .padding(start = dimen_mdpi.x_2_0, end = dimen_mdpi.x_2_0, top = dimen_mdpi.x_2_0)
             ) {

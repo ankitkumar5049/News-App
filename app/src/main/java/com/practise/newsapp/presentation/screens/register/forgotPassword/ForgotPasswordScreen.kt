@@ -40,12 +40,13 @@ fun ForgotPasswordScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .background(NewsAppTheme.customColors.background)
                     .padding(innerPadding)
                     .padding(start = dimen_mdpi.x_2_0, end = dimen_mdpi.x_2_0, bottom = dimen_mdpi.x_2_0)
             ) {
                 HeadingText(
                     inputText = CommonString.FORGOT_PASSWORD,
-                    modifier = Modifier.padding(top = dimen_mdpi.x_32_dp),
+                    modifier = Modifier,
                     textColor = NewsAppTheme.customColors.textPrimary,
                 )
 
@@ -78,7 +79,7 @@ fun ForgotPasswordScreen(
                         .padding(bottom = dimen_mdpi.x_32_dp),
                     onClick = {
                         navigate(
-                            NavigationItem.ResetPassword.route,
+                            NavigationItem.OtpVerification.route,
                             true,
                             null,
                             true

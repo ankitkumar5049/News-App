@@ -54,6 +54,7 @@ fun ResetPasswordScreen(
             Column(
                 modifier = Modifier
                     .padding(innerPadding)
+                    .background(Color.Black)
                     .padding(start = dimen_mdpi.x_2_0, end = dimen_mdpi.x_2_0, bottom = dimen_mdpi.x_2_0)
             ) {
                 HeadingText(

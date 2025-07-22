@@ -6,6 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.practise.newsapp.presentation.screens.register.enterOTP.OtpScreen
 import com.practise.newsapp.presentation.screens.register.forgotPassword.ForgotPasswordScreen
 import com.practise.newsapp.presentation.screens.register.forgotPassword.ForgotPasswordViewModel
 import com.practise.newsapp.presentation.screens.register.login.LoginScreen
@@ -68,6 +69,13 @@ fun AppNavHost(
                 viewModel = viewModel,
             )
         }
+
+        composable(NavigationItem.OtpVerification.route) {
+            OtpScreen(
+                navigate = navController::navigateWithOptionalPopUp,
+            )
+        }
+
     }
 }
 

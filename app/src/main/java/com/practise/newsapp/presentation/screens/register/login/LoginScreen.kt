@@ -1,5 +1,6 @@
 package com.practise.newsapp.presentation.screens.register.login
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -78,6 +79,7 @@ fun LoginScreen(
             Column (
                 Modifier
                     .fillMaxSize()
+                    .background(NewsAppTheme.customColors.background)
                     .padding(innerPadding)
                     .padding(start = dimen_mdpi.x_2_0, end = dimen_mdpi.x_2_0, top = dimen_mdpi.x_2_0)
             ){

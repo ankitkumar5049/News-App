@@ -22,6 +22,9 @@ object CommonString {
     const val RESET_PASSWORD = "Reset \nPassword"
     const val SEARCH = "Search"
     const val SELECT_YOUR_COUNTRY = "Select your country"
+    const val OTP_VERIFICATION = "OTP Verification"
+    const val ENTER_THE_OTP = "Enter the OTP"
+    const val RESEND_OTP_IN = "Resend OTP in"
 
 
 }
