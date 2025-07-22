@@ -6,16 +6,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.practise.newsapp.screens.register.forgotPassword.ForgotPasswordScreen
-import com.practise.newsapp.screens.register.forgotPassword.ForgotPasswordViewModel
-import com.practise.newsapp.screens.register.login.LoginScreen
-import com.practise.newsapp.screens.register.login.LoginViewModel
-import com.practise.newsapp.screens.register.resetPassword.ResetPasswordScreen
-import com.practise.newsapp.screens.register.resetPassword.ResetPasswordViewModel
-import com.practise.newsapp.screens.register.signup.SignupScreen
-import com.practise.newsapp.screens.register.signup.SignupViewModel
-import com.practise.newsapp.screens.selectCountry.SelectCountryScreen
-import com.practise.newsapp.screens.selectCountry.SelectCountryViewModel
+import com.practise.newsapp.presentation.screens.register.forgotPassword.ForgotPasswordScreen
+import com.practise.newsapp.presentation.screens.register.forgotPassword.ForgotPasswordViewModel
+import com.practise.newsapp.presentation.screens.register.login.LoginScreen
+import com.practise.newsapp.presentation.screens.register.login.LoginViewModel
+import com.practise.newsapp.presentation.screens.register.resetPassword.ResetPasswordScreen
+import com.practise.newsapp.presentation.screens.register.resetPassword.ResetPasswordViewModel
+import com.practise.newsapp.presentation.screens.register.signup.SignupScreen
+import com.practise.newsapp.presentation.screens.register.signup.SignupViewModel
+import com.practise.newsapp.presentation.screens.selectCountry.SelectCountryScreen
+import com.practise.newsapp.presentation.screens.selectCountry.SelectCountryViewModel
 
 
 @Composable
