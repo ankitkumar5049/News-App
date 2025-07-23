@@ -6,6 +6,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.practise.newsapp.presentation.screens.home.HomeScreen
+import com.practise.newsapp.presentation.screens.register.congratulation.LogoScreen
 import com.practise.newsapp.presentation.screens.register.enterOTP.OtpScreen
 import com.practise.newsapp.presentation.screens.register.forgotPassword.ForgotPasswordScreen
 import com.practise.newsapp.presentation.screens.register.forgotPassword.ForgotPasswordViewModel
@@ -74,6 +76,16 @@ fun AppNavHost(
             OtpScreen(
                 navigate = navController::navigateWithOptionalPopUp,
             )
+        }
+
+        composable(NavigationItem.LogoScreen.route) {
+            LogoScreen(
+                navigate = navController::navigateWithOptionalPopUp,
+            )
+        }
+
+        composable(NavigationItem.Home.route) {
+            HomeScreen()
         }
 
     }

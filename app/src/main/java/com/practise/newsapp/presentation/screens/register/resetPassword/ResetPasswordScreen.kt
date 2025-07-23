@@ -32,6 +32,7 @@ import com.practise.newsapp.presentation.uiComponents.HeadingText
 import com.practise.newsapp.presentation.uiComponents.NewsTopBar
 import com.practise.newsapp.common.utils.CommonContentDescription
 import com.practise.newsapp.common.utils.CommonString
+import com.practise.newsapp.navigation.NavigationItem
 import com.practise.newsapp.ui.theme.NewsAppTheme
 import kotlin.reflect.KFunction4
 
@@ -54,7 +55,7 @@ fun ResetPasswordScreen(
             Column(
                 modifier = Modifier
                     .padding(innerPadding)
-                    .background(Color.Black)
+                    .background(NewsAppTheme.customColors.background)
                     .padding(start = dimen_mdpi.x_2_0, end = dimen_mdpi.x_2_0, bottom = dimen_mdpi.x_2_0)
             ) {
                 HeadingText(
@@ -66,13 +67,13 @@ fun ResetPasswordScreen(
                 Spacer(modifier = Modifier.height(dimen_mdpi.x_1_25))
 
                 CommonTextInputFields(
-                    value = viewModel.state.password,
+                    value = viewModel.state.newPassword,
                     onValueChange = {
                         viewModel.state = viewModel.state.copy(
-                            password = it
+                            newPassword = it
                         )
                     },
-                    labelString = CommonString.PASSWORD,
+                    labelString = CommonString.NEW_PASSWORD,
                     semanticName = CommonString.PASSWORD,
                     maxChar = 20,
                     labelAsteriskRequired = true,
@@ -92,20 +93,20 @@ fun ResetPasswordScreen(
                         )
                     },
                     enforceVisualTransformation = true,
-                    borderColor = if(viewModel.state.password.length in 1..3) Color.Red else NewsAppTheme.customColors.border,
+                    borderColor = if(viewModel.state.newPassword.length in 1..3) Color.Red else NewsAppTheme.customColors.border,
                     visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
                 )
 
                 Spacer(modifier = Modifier.height(dimen_mdpi.x_1_25))
 
                 CommonTextInputFields(
-                    value = viewModel.state.password,
+                    value = viewModel.state.confirmNewPassword,
                     onValueChange = {
                         viewModel.state = viewModel.state.copy(
-                            password = it
+                            confirmNewPassword = it
                         )
                     },
-                    labelString = CommonString.PASSWORD,
+                    labelString = CommonString.CONFIRM_NEW_PASSWORD,
                     semanticName = CommonString.PASSWORD,
                     maxChar = 20,
                     labelAsteriskRequired = true,
@@ -125,7 +126,7 @@ fun ResetPasswordScreen(
                         )
                     },
                     enforceVisualTransformation = true,
-                    borderColor = if(viewModel.state.password.length in 1..3) Color.Red else NewsAppTheme.customColors.border,
+                    borderColor = if(viewModel.state.confirmNewPassword.length in 1..3) Color.Red else NewsAppTheme.customColors.border,
                     visualTransformation = if (showConfirmPassword) VisualTransformation.None else PasswordVisualTransformation(),
                 )
 
@@ -137,7 +138,12 @@ fun ResetPasswordScreen(
                     buttonModifier = Modifier
                         .padding(bottom = dimen_mdpi.x_32_dp),
                     onClick = {
-
+                        navigate(
+                            NavigationItem.LogoScreen.route,
+                            true,
+                            NavigationItem.OtpVerification.route,
+                            true
+                        )
                     }
                 )
             }

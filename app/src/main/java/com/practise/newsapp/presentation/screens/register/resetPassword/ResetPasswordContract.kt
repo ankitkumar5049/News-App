@@ -4,7 +4,7 @@ import com.practise.newsapp.common.utils.Constants
 
 class ResetPasswordContract {
     data class State(
-        var password: String = Constants.EMPTY_STRING,
-        var confirmPassword: String = Constants.EMPTY_STRING
+        var newPassword: String = Constants.EMPTY_STRING,
+        var confirmNewPassword: String = Constants.EMPTY_STRING
     )
 }

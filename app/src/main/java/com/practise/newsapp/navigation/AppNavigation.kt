@@ -8,6 +8,7 @@ enum class Screen {
     RESET_PASSWORD,
     SELECT_COUNTRY,
     OTP_VERIFICATION,
+    LOGO_SCREEN,
 }
 sealed class NavigationItem(val route: String) {
     object Home : NavigationItem(Screen.HOME.name)
@@ -17,4 +18,5 @@ sealed class NavigationItem(val route: String) {
     object ResetPassword : NavigationItem(Screen.RESET_PASSWORD.name)
     object SelectCountry : NavigationItem(Screen.SELECT_COUNTRY.name)
     object OtpVerification : NavigationItem(Screen.OTP_VERIFICATION.name)
+    object LogoScreen : NavigationItem(Screen.LOGO_SCREEN.name)
 }

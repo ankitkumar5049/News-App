@@ -4,16 +4,19 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandIn
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.compose.animation.shrinkOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.TransformOrigin
@@ -87,6 +90,43 @@ fun SlideInVertically(
                 fadeOut(
                     animationSpec = tween(durationMillis = exitDuration)
                 )
+    ) {
+        content()
+    }
+}
+
+@Composable
+fun ScaleInCenterPivot(
+    visible: Boolean,
+    content: @Composable () -> Unit,
+){
+    Column {
+
+        AnimatedVisibility(
+            visible = visible,
+            enter = scaleIn() + expandVertically(expandFrom = Alignment.CenterVertically),
+            exit = scaleOut() + shrinkVertically(shrinkTowards = Alignment.CenterVertically),
+        ) {
+            content()
+        }
+    }
+}
+
+@Composable
+fun ScaleInTopLeft(
+    visible: Boolean,
+    content: @Composable () -> Unit,
+){
+    AnimatedVisibility(
+        visible = visible,
+        enter =
+        scaleIn(transformOrigin = TransformOrigin(0f, 0f)) +
+                fadeIn() +
+                expandIn(expandFrom = Alignment.TopStart),
+        exit =
+        scaleOut(transformOrigin = TransformOrigin(0f, 0f)) +
+                fadeOut() +
+                shrinkOut(shrinkTowards = Alignment.TopStart),
     ) {
         content()
     }

@@ -231,6 +231,22 @@ fun HeadingText(
 }
 
 @Composable
+fun LargeHeadingText(
+    inputText: String,
+    modifier: Modifier = Modifier,
+    textColor: Color,
+){
+    Text(
+        text = inputText,
+        style = MaterialTheme.typography.displayLarge.copy(
+            fontWeight = FontWeight.Bold,
+        ),
+        color = textColor,
+        modifier = modifier
+    )
+}
+
+@Composable
 fun SubHeadingText(
     inputText: String,
     modifier: Modifier = Modifier,
@@ -252,6 +268,7 @@ fun CommonTextField(
     clickable: Boolean = false,
     link: String? = null,
     isLink: Boolean = false,
+    onClick: () -> Unit? = {},
     modifier: Modifier,
     contentColor: Color = customColors.textPrimary
 ){
@@ -264,7 +281,7 @@ fun CommonTextField(
             fontSize = NewsAppTheme.fontSizes.x_1_25,
         ),
         modifier = if(clickable) Modifier.clickable {
-
+            onClick()
         } else Modifier.then(modifier)
     )
 }

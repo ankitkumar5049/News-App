@@ -1,6 +1,7 @@
 package com.practise.newsapp.common.utils
 
 object CommonString {
+    const val APP_NAME = "KHABAR"
     const val HELLO = "Hello"
     const val AGAIN = "Again!"
     const val WELCOME_BACK = "Welcome back you've \nbeen missed"
@@ -11,6 +12,8 @@ object CommonString {
     const val LOGIN = "Login"
     const val USERNAME = "Username"
     const val PASSWORD = "Password"
+    const val NEW_PASSWORD = "New Password"
+    const val CONFIRM_NEW_PASSWORD = "Confirm New Password"
     const val SIGN_UP_TO_GET_STARTED = "Sign up to get started"
     const val ALREADY_HAVE_AN_ACCOUNT = "Already have an account?"
     const val FORGOT_PASSWORD = "Forgot \nPassword?"
@@ -25,6 +28,8 @@ object CommonString {
     const val OTP_VERIFICATION = "OTP Verification"
     const val ENTER_THE_OTP = "Enter the OTP"
     const val RESEND_OTP_IN = "Resend OTP in"
+    const val HOMEPAGE = "Homepage"
+    const val CONGRATULATIONS = "Congratulations!"
 
 
 }
