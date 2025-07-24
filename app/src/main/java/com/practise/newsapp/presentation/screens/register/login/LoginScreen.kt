@@ -221,7 +221,12 @@ fun LoginScreen(
                     buttonModifier = Modifier
                         .padding(bottom = dimen_mdpi.x_32_dp),
                     onClick = {
-
+                        navigate(
+                            NavigationItem.Home.route,
+                            true,
+                            NavigationItem.Login.route,
+                            true
+                        )
                     }
                 )
 

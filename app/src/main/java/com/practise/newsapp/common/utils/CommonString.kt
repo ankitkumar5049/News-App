@@ -30,6 +30,11 @@ object CommonString {
     const val RESEND_OTP_IN = "Resend OTP in"
     const val HOMEPAGE = "Homepage"
     const val CONGRATULATIONS = "Congratulations!"
+    const val FILL_YOUR_PROFILE = "Fill your profile"
+    const val FULL_NAME = "Full Name"
+    const val EMAIL_ADDRESS = "Email Address"
+    const val PHONE_NUMBER = "Phone Number"
+    const val NEXT = "Next"
 
 
 }

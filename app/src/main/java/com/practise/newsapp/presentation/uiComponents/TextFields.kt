@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -62,6 +63,7 @@ fun CommonTextInputFields(
     labelString: String = Constants.EMPTY_STRING,
     labelTextColor: Color? = null,
     labelResource: Int = 0,
+    readOnly: Boolean = false,
     backgroundColor: Color = customColors.textFieldBackground,
     useDisabledColorsOnly: Boolean = false,
     maxLines: Int = 1,
@@ -120,9 +122,8 @@ fun CommonTextInputFields(
                         }
                     }
                 },
-                style = LocalTextStyle.current.copy(
+                style = MaterialTheme.typography.bodySmall.copy(
                     fontWeight = FontWeight.Normal,
-                    fontSize = NewsAppTheme.fontSizes.x_1_25,
                 ),
                 color = labelTextColor ?: customColors.secondPrimary
             )
@@ -149,6 +150,7 @@ fun CommonTextInputFields(
                     .then(modifier)
                     .semantics { contentDescription = semanticName },
                 enabled = enabled,
+                readOnly = readOnly,
                 value = value,
                 onValueChange = {
                     if (it.length <= maxChar) {
@@ -156,6 +158,9 @@ fun CommonTextInputFields(
                         onValueChange(CommonUtilities.trimSpaces(it))
                     }
                 },
+                textStyle = MaterialTheme.typography.bodySmall.copy(
+                    fontWeight = FontWeight.Normal,
+                ),
                 maxLines = maxLines,
                 singleLine = singleLine,
                 trailingIcon = trailingIcon,
@@ -203,9 +208,8 @@ fun CommonTextInputFields(
 
                     },
                     modifier = Modifier.padding(top = dimen_mdpi.x_0_75),
-                    style = LocalTextStyle.current.copy(
+                    style = MaterialTheme.typography.bodySmall.copy(
                         fontWeight = FontWeight.Normal,
-                        fontSize = NewsAppTheme.fontSizes.x_1_25,
                     ),
                     color = errorTextColor,
                 )

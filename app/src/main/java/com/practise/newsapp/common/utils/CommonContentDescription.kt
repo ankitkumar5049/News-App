@@ -4,5 +4,7 @@ object CommonContentDescription {
     const val TOGGLE_PASSWORD_VISIBILITY = "Toggle password visibility"
     const val  EMAIL_OR_PHONE_NUMBER = "Email/Phone Number"
     const val  BACK_BUTTON = "Back Button"
+    const val  CAMERA = "CAMERA"
+    const val  PROFILE_IMAGE = "Profile Image"
 
 }
