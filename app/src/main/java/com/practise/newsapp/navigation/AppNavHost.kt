@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.practise.newsapp.presentation.screens.home.HomeScreen
+import com.practise.newsapp.presentation.screens.home.HomeViewModel
 import com.practise.newsapp.presentation.screens.profile.ProfileScreen
 import com.practise.newsapp.presentation.screens.register.congratulation.LogoScreen
 import com.practise.newsapp.presentation.screens.register.enterOTP.OtpScreen
@@ -86,7 +87,8 @@ fun AppNavHost(
         }
 
         composable(NavigationItem.Home.route) {
-            HomeScreen()
+            val viewmodel : HomeViewModel = hiltViewModel()
+            HomeScreen(viewmodel)
         }
 
         composable(NavigationItem.Profile.route) {

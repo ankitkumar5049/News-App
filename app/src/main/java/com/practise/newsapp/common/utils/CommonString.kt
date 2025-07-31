@@ -35,6 +35,7 @@ object CommonString {
     const val EMAIL_ADDRESS = "Email Address"
     const val PHONE_NUMBER = "Phone Number"
     const val NEXT = "Next"
+    const val HOME = "Home"
 
 
 }
