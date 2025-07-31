@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,13 +20,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import com.practise.newsapp.R
 import com.practise.newsapp.common.dimensions.dimen_mdpi
+import com.practise.newsapp.common.utils.CommonContentDescription
 import com.practise.newsapp.common.utils.CommonString
 import com.practise.newsapp.navigation.NavigationItem
 import com.practise.newsapp.presentation.animations.ScaleInTopLeft
 import com.practise.newsapp.presentation.uiComponents.CommonButton
 import com.practise.newsapp.presentation.uiComponents.HeadingText
-import com.practise.newsapp.presentation.uiComponents.LargeHeadingText
 import com.practise.newsapp.ui.theme.NewsAppTheme
 import kotlin.reflect.KFunction4
 
@@ -53,13 +57,14 @@ fun LogoScreen(navigate: KFunction4<String, Boolean, String?, Boolean, Unit>) {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                LargeHeadingText(
-                    inputText = CommonString.APP_NAME,
-                    modifier = Modifier.padding(top = dimen_mdpi.x_32_dp),
-                    textColor = NewsAppTheme.customColors.primary,
+                Icon(
+                    painter = painterResource(R.drawable.ic_logo),
+                    tint = NewsAppTheme.customColors.primary,
+                    contentDescription = CommonContentDescription.TOGGLE_PASSWORD_VISIBILITY,
+                    modifier = Modifier
+                        .requiredSize(dimen_mdpi.x_20_25)
+                        .padding(dimen_mdpi.x_1_25)
                 )
-
-                Spacer(modifier = Modifier.height(dimen_mdpi.x_1_25))
 
                 ScaleInTopLeft(
                     visible = visible
