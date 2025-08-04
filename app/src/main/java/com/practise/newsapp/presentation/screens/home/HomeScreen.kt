@@ -20,8 +20,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.practise.newsapp.common.dimensions.dimen_mdpi
@@ -40,6 +42,7 @@ fun HomeScreen(
 ){
 
     val headlines = arrayOf("Trending", "Business", "Entertainment", "Cricket", "Politics", "General Health", "Science", "Sports", "Technology")
+    var selectedHeadline by remember { mutableStateOf<String?>("Trending") }
     LaunchedEffect(Unit) {
         viewmodel.getNews()
     }
@@ -109,7 +112,9 @@ fun HomeScreen(
                             key = {it.hashCode()}
                         ){ headline ->
                             HeadlineCard(
-                                headLine = headline
+                                headLine = headline,
+                                isSelected = headline == selectedHeadline,
+                                onClick = {selectedHeadline = headline},
                             )
                         }
                     }
