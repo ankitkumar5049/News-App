@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Help
+import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -37,6 +38,8 @@ fun NewsTopBar(
     ellipsis: Boolean = false,
     showStatusBar: Boolean = true,
     showOptionMenuIcon: Boolean = false,
+    showNotificationIcon: Boolean = false,
+    onNotificationMenuClick: (() -> Unit)? = null,
     showNavigationBar: Boolean = true,
     icons: (@Composable () -> Unit)? = null
 ){
@@ -77,12 +80,12 @@ fun NewsTopBar(
             modifier = Modifier
                 .padding(start = if(showBackButton) NewsAppTheme.dimens.x_0_dp else NewsAppTheme.dimens.x_16_dp)
                 .weight(Constants.FULL_OPACITY),
-            horizontalArrangement = if(showAppLogo) Arrangement.Center else Arrangement.Start
+            horizontalArrangement = Arrangement.Start //if(showAppLogo) Arrangement.Center else Arrangement.Start
         ) {
             if(showAppLogo){
                 Image(
                     modifier = Modifier.padding(vertical = NewsAppTheme.dimens.x_4_dp),
-                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                    painter = painterResource(id = R.drawable.ic_logo),
                     contentDescription = Constants.EMPTY_STRING
                 )
             }
@@ -99,14 +102,28 @@ fun NewsTopBar(
 
         icons?.invoke()
 
-        if (showOptionMenuIcon) {
+        if(showNotificationIcon){
             IconButton(onClick = {
-                showMenu = !showMenu
+                onNotificationMenuClick?.invoke()
             }) {
+                Image(
+                    imageVector = Icons.Outlined.Notifications,
+                    contentDescription = "Notification",
+                    colorFilter = ColorFilter.tint(color = NewsAppTheme.customColors.surface)
+                )
+            }
+        }
+
+        if (showOptionMenuIcon) {
+            IconButton(
+                onClick = {
+//                showMenu = !showMenu
+                }
+            ) {
                 Image(
                     imageVector = Icons.AutoMirrored.Filled.Help,
                     contentDescription = "Help",
-                    colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.surface)
+                    colorFilter = ColorFilter.tint(color = NewsAppTheme.customColors.surface)
                 )
             }
             DropdownMenu(
