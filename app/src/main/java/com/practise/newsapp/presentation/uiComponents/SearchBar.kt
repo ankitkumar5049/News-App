@@ -3,6 +3,7 @@ package com.practise.newsapp.presentation.uiComponents
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -50,6 +51,7 @@ fun SearchBarInputField(
     TextField(
         modifier = Modifier
             .fillMaxWidth()
+            .height(dimens.x_2_25)
             .onFocusChanged {
 
             }

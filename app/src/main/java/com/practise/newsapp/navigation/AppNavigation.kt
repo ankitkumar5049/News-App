@@ -10,6 +10,7 @@ enum class Screen {
     OTP_VERIFICATION,
     LOGO_SCREEN,
     PROFILE,
+    NOTIFICATION,
 }
 sealed class NavigationItem(val route: String) {
     object Home : NavigationItem(Screen.HOME.name)
@@ -21,4 +22,6 @@ sealed class NavigationItem(val route: String) {
     object OtpVerification : NavigationItem(Screen.OTP_VERIFICATION.name)
     object LogoScreen : NavigationItem(Screen.LOGO_SCREEN.name)
     object Profile : NavigationItem(Screen.PROFILE.name)
+    object Notification : NavigationItem(Screen.NOTIFICATION.name)
+
 }
