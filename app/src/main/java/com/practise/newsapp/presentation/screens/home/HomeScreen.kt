@@ -1,6 +1,10 @@
 package com.practise.newsapp.presentation.screens.home
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,12 +14,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.FilterAlt
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -25,11 +30,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import com.practise.newsapp.common.dimensions.dimen_mdpi
 import com.practise.newsapp.common.utils.CommonContentDescription
 import com.practise.newsapp.navigation.NavigationItem
 import com.practise.newsapp.presentation.uiComponents.HeadlineCard
+import com.practise.newsapp.presentation.uiComponents.LogoBounceLoader
+import com.practise.newsapp.presentation.uiComponents.LogoPulseLoader
 import com.practise.newsapp.presentation.uiComponents.NewsCard
 import com.practise.newsapp.presentation.uiComponents.NewsTopBar
 import com.practise.newsapp.presentation.uiComponents.SearchBarInputField
@@ -43,8 +52,13 @@ fun HomeScreen(
 
     val headlines = arrayOf("Trending", "Business", "Entertainment", "Cricket", "Politics", "General Health", "Science", "Sports", "Technology")
     var selectedHeadline by remember { mutableStateOf<String?>("Trending") }
+    var selectedHeadlineIndex by remember { mutableStateOf(0) }
+
     LaunchedEffect(Unit) {
-        viewmodel.getNews()
+        viewmodel.getNews(
+            query = selectedHeadline ?: "Trending",
+            pageSize = 10,
+        )
     }
 
     Box {
@@ -107,14 +121,14 @@ fun HomeScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(dimen_mdpi.x_1_dp)
                     ) {
-                        items(
-                            items = headlines,
-                            key = {it.hashCode()}
-                        ){ headline ->
+                        itemsIndexed(headlines) { index, headline ->
                             HeadlineCard(
                                 headLine = headline,
-                                isSelected = headline == selectedHeadline,
-                                onClick = {selectedHeadline = headline},
+                                isSelected = index == selectedHeadlineIndex,
+                                onClick = {
+                                    selectedHeadlineIndex = index
+                                    viewmodel.getNews(query = headlines[selectedHeadlineIndex])
+                                }
                             )
                         }
                     }
@@ -122,25 +136,44 @@ fun HomeScreen(
 
 
                 if(viewmodel.apiState.isLoading){
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally),
-                        color = NewsAppTheme.customColors.primary
-                    )
+                    LogoPulseLoader()
                 }
                 else {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.spacedBy(dimen_mdpi.x_0_75)
+                    Box(
+                        modifier = Modifier.pointerInput(Unit) {
+                            detectDragGestures { change, dragAmount ->
+                                change.consume()
+
+                                val (x, _) = dragAmount
+
+                                if (x > 0) { // Swipe right
+                                    if (selectedHeadlineIndex > 0) {
+                                        selectedHeadlineIndex -= 1
+                                        viewmodel.getNews(query = headlines[selectedHeadlineIndex])
+                                    }
+                                } else if (x < 0) { // Swipe left
+                                    if (selectedHeadlineIndex < headlines.lastIndex) {
+                                        selectedHeadlineIndex += 1
+                                        viewmodel.getNews(query = headlines[selectedHeadlineIndex])
+                                    }
+                                }
+                            }
+                        }
                     ) {
-                        items(
-                            items = viewmodel.state.articles,
-                            key = { it.hashCode() }
-                        ) { article ->
-                            NewsCard(
-                                headline = article.title,
-                                imageUrl = article.urlToImage
-                            )
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.spacedBy(dimen_mdpi.x_0_75)
+                        ) {
+                            items(
+                                items = viewmodel.state.articles,
+                                key = { it.hashCode() }
+                            ) { article ->
+                                NewsCard(
+                                    headline = article.title,
+                                    source = article.source?.name,
+                                    imageUrl = article.urlToImage
+                                )
+                            }
                         }
                     }
                 }

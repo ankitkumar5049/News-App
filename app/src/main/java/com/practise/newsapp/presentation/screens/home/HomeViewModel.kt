@@ -1,17 +1,15 @@
 package com.practise.newsapp.presentation.screens.home
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.viewModelScope
-import com.practise.newsapp.BuildConfig
 import com.practise.newsapp.common.viewmodel.BaseViewModel
 import com.practise.newsapp.domain.api.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,19 +20,26 @@ class HomeViewModel @Inject constructor(
     var state by mutableStateOf(HomeContract.state())
     private var searchJob: Job? = null
 
-    fun getNews() {
+
+    val formattedDate = getYesterdayDate()
+
+    fun getNews(
+        query: String = "Trending",
+        pageSize: Int = 10,
+        fromDate: String = formattedDate,
+        apiKey: String = "81fa24457e154a7a844c37bdb5e1c168"
+    ) {
         apiCallWithJob(
             api = {
                 repository.getNews(
-                    q = "cricket",
-                    pageSize = "10",
-                    fromDate = "2025-07-31",
-                    apiKey = "81fa24457e154a7a844c37bdb5e1c168"
+                    q = query,
+                    pageSize = pageSize.toString(),
+                    fromDate = fromDate,
+                    apiKey = apiKey
                 )
             },
             onSuccess = { result ->
-                state = state.copy(articles = result.articles ?: emptyList())
-                Log.d("HomeViewModel", "✅ News loaded successfully")
+                state = state.copy(articles = result.articles)
             },
             onError = { code, message, body ->
                 apiState = apiState.copy(
@@ -43,11 +48,19 @@ class HomeViewModel @Inject constructor(
                     isApiSuccessful = false,
                     showErrorBottomSheet = true
                 )
-                Log.e("HomeViewModel", "❌ API error: $code - $message")
             },
             apiJobCallback = { job ->
                 searchJob = job
             }
         )
+    }
+
+
+    fun getYesterdayDate(): String {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DATE, -1)
+
+        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return formatter.format(calendar.time)
     }
 }

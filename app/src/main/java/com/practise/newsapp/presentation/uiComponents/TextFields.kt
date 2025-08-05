@@ -253,13 +253,14 @@ fun LargeHeadingText(
 @Composable
 fun SubHeadingText(
     inputText: String,
+    fontWeight: FontWeight = FontWeight.Normal,
     modifier: Modifier = Modifier,
     textColor: Color = customColors.secondPrimary
 ){
     Text(
         text = inputText,
         style = MaterialTheme.typography.bodyMedium.copy(
-            fontWeight = FontWeight.Normal,
+            fontWeight = fontWeight,
         ),
         color = textColor,
         modifier = modifier,
