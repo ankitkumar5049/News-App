@@ -8,8 +8,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,9 +23,12 @@ import androidx.compose.material.icons.filled.BrokenImage
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -31,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -43,7 +50,9 @@ import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
 import com.practise.newsapp.R
 import com.practise.newsapp.common.dimensions.dimen_mdpi
+import com.practise.newsapp.common.dimensions.dimen_xhdpi
 import com.practise.newsapp.common.utils.Constants
+import com.practise.newsapp.domain.Articles
 import com.practise.newsapp.ui.theme.NewsAppTheme
 import com.practise.newsapp.ui.theme.NewsAppTheme.fontSizes
 
@@ -90,9 +99,13 @@ fun NewsCard(
     headline: String? = Constants.EMPTY_STRING,
     source: String? = Constants.EMPTY_STRING,
     imageUrl: String? = Constants.EMPTY_STRING,
+    onClick: () -> Unit
 ) {
     Card(
         modifier = Modifier.fillMaxWidth()
+            .clickable {
+                onClick()
+            }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -142,18 +155,22 @@ fun NewsCard(
                 }
             }
 
-            Column {
+            Column(
+                modifier = Modifier
+                    .padding(start = dimen_xhdpi.x_0_75, end = dimen_xhdpi.x_0_75)
+            ) {
                 headline?.let {
                     SubHeadingText(
                         inputText = it,
-                        textColor = NewsAppTheme.customColors.textPrimary
+                        textColor = NewsAppTheme.customColors.textPrimary,
+                        maxLines = 2
                     )
                 }
 
                 source?.let {
                     SubHeadingText(
                         inputText = it,
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeight.SemiBold,
                         textColor = NewsAppTheme.customColors.textPrimary
                     )
                 }
@@ -249,6 +266,100 @@ fun LogoPulseLoader() {
                 ),
             tint = NewsAppTheme.customColors.primary
         )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ShowNewsDescBottomSheet(
+    articles: Articles,
+    onDismiss: () -> Unit
+){
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
+
+
+    ModalBottomSheet(
+        sheetMaxWidth = screenWidth,
+        sheetState = sheetState,
+        modifier = Modifier,
+
+        onDismissRequest = {
+             onDismiss()
+        },
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+        ) {
+            SubcomposeAsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(articles.urlToImage)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = "News Image",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 300.dp)
+                    .padding(end = 8.dp),
+                contentScale = ContentScale.Fit
+            ) {
+                when (painter.state) {
+                    is AsyncImagePainter.State.Loading -> {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Color.LightGray.copy(alpha = 0.3f)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(20.dp),
+                                strokeWidth = 2.dp
+                            )
+                        }
+                    }
+
+                    is AsyncImagePainter.State.Error -> {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Color.Gray),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.BrokenImage,
+                                contentDescription = "Image not available",
+                                tint = Color.White
+                            )
+                        }
+                    }
+
+                    else -> {
+                        SubcomposeAsyncImageContent()
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(dimen_mdpi.x_0_75))
+            SubtitleText(
+                text = articles.title.toString(),
+                modifier = Modifier,
+                color = NewsAppTheme.customColors.textPrimary
+            )
+            Spacer(modifier = Modifier.height(dimen_mdpi.x_0_75))
+            SubHeadingText(
+                inputText = articles.description.toString(),
+                textColor = NewsAppTheme.customColors.textPrimary
+            )
+            Spacer(modifier = Modifier.height(dimen_mdpi.x_0_75))
+            SubHeadingText(
+                inputText = articles.source?.name.toString(),
+                textColor = NewsAppTheme.customColors.textPrimary,
+                fontWeight = FontWeight.SemiBold
+            )
+
+        }
     }
 }
 

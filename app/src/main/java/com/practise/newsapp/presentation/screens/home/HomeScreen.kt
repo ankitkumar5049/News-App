@@ -1,8 +1,5 @@
 package com.practise.newsapp.presentation.screens.home
 
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -14,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -30,18 +26,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import com.practise.newsapp.common.dimensions.dimen_mdpi
 import com.practise.newsapp.common.utils.CommonContentDescription
+import com.practise.newsapp.domain.Articles
 import com.practise.newsapp.navigation.NavigationItem
 import com.practise.newsapp.presentation.uiComponents.HeadlineCard
-import com.practise.newsapp.presentation.uiComponents.LogoBounceLoader
 import com.practise.newsapp.presentation.uiComponents.LogoPulseLoader
 import com.practise.newsapp.presentation.uiComponents.NewsCard
 import com.practise.newsapp.presentation.uiComponents.NewsTopBar
 import com.practise.newsapp.presentation.uiComponents.SearchBarInputField
+import com.practise.newsapp.presentation.uiComponents.ShowNewsDescBottomSheet
 import com.practise.newsapp.ui.theme.NewsAppTheme
 
 @Composable
@@ -53,11 +49,11 @@ fun HomeScreen(
     val headlines = arrayOf("Trending", "Business", "Entertainment", "Cricket", "Politics", "General Health", "Science", "Sports", "Technology")
     var selectedHeadline by remember { mutableStateOf<String?>("Trending") }
     var selectedHeadlineIndex by remember { mutableStateOf(0) }
+    var selectedArticle by remember { mutableStateOf<Articles?>(null) }
 
     LaunchedEffect(Unit) {
         viewmodel.getNews(
             query = selectedHeadline ?: "Trending",
-            pageSize = 10,
         )
     }
 
@@ -171,8 +167,15 @@ fun HomeScreen(
                                 NewsCard(
                                     headline = article.title,
                                     source = article.source?.name,
-                                    imageUrl = article.urlToImage
+                                    imageUrl = article.urlToImage,
+                                    onClick = { selectedArticle = article }
                                 )
+                            }
+                        }
+
+                        selectedArticle?.let {
+                            ShowNewsDescBottomSheet(it) {
+                                selectedArticle = null // Close on dismiss
                             }
                         }
                     }

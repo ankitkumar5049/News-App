@@ -255,7 +255,8 @@ fun SubHeadingText(
     inputText: String,
     fontWeight: FontWeight = FontWeight.Normal,
     modifier: Modifier = Modifier,
-    textColor: Color = customColors.secondPrimary
+    textColor: Color = customColors.secondPrimary,
+    maxLines: Int = 10
 ){
     Text(
         text = inputText,
@@ -264,6 +265,7 @@ fun SubHeadingText(
         ),
         color = textColor,
         modifier = modifier,
+        maxLines = maxLines
     )
 }
 

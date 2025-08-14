@@ -25,7 +25,7 @@ class HomeViewModel @Inject constructor(
 
     fun getNews(
         query: String = "Trending",
-        pageSize: Int = 10,
+        pageSize: Int = 20,
         fromDate: String = formattedDate,
         apiKey: String = "81fa24457e154a7a844c37bdb5e1c168"
     ) {
