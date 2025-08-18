@@ -36,6 +36,9 @@ object CommonString {
     const val PHONE_NUMBER = "Phone Number"
     const val NEXT = "Next"
     const val HOME = "Home"
+    const val EMAIL = "Email"
+    const val FIREBASE_DB_USERS = "users"
+    const val PLEASE_WAIT = "Please wait..."
 
 
 }

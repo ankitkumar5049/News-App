@@ -38,6 +38,7 @@ import com.practise.newsapp.presentation.uiComponents.NewsCard
 import com.practise.newsapp.presentation.uiComponents.NewsTopBar
 import com.practise.newsapp.presentation.uiComponents.SearchBarInputField
 import com.practise.newsapp.presentation.uiComponents.ShowNewsDescBottomSheet
+import com.practise.newsapp.presentation.uiComponents.WaitScreen
 import com.practise.newsapp.ui.theme.NewsAppTheme
 
 @Composable
@@ -132,7 +133,7 @@ fun HomeScreen(
 
 
                 if(viewmodel.apiState.isLoading){
-                    LogoPulseLoader()
+                    WaitScreen()
                 }
                 else {
                     Box(

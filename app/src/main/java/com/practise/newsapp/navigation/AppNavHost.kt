@@ -12,6 +12,7 @@ import com.practise.newsapp.presentation.screens.notification.NotificationScreen
 import com.practise.newsapp.presentation.screens.profile.ProfileScreen
 import com.practise.newsapp.presentation.screens.register.congratulation.LogoScreen
 import com.practise.newsapp.presentation.screens.register.enterOTP.OtpScreen
+import com.practise.newsapp.presentation.screens.register.enterOTP.OtpVerificationViewModel
 import com.practise.newsapp.presentation.screens.register.forgotPassword.ForgotPasswordScreen
 import com.practise.newsapp.presentation.screens.register.forgotPassword.ForgotPasswordViewModel
 import com.practise.newsapp.presentation.screens.register.login.LoginScreen
@@ -76,8 +77,10 @@ fun AppNavHost(
         }
 
         composable(NavigationItem.OtpVerification.route) {
+            val viewmodel: OtpVerificationViewModel = hiltViewModel()
             OtpScreen(
                 navigate = navController::navigateWithOptionalPopUp,
+                viewmodel = viewmodel
             )
         }
 

@@ -37,7 +37,10 @@ import com.practise.newsapp.ui.theme.NewsAppTheme
 import kotlin.reflect.KFunction4
 
 @Composable
-fun OtpScreen(navigate: KFunction4<String, Boolean, String?, Boolean, Unit>) {
+fun OtpScreen(
+    navigate: KFunction4<String, Boolean, String?, Boolean, Unit>,
+    viewmodel: OtpVerificationViewModel
+) {
 
     val otpLength = 4
     val otpValues = remember { mutableStateListOf("", "", "", "") }

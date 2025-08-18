@@ -6,6 +6,7 @@ class SignupContract{
     data class State(
         val username: String = Constants.EMPTY_STRING,
         val password: String = Constants.EMPTY_STRING,
+        val email: String = Constants.EMPTY_STRING,
         val usernameError: String = Constants.EMPTY_STRING,
         val passwordError: String = Constants.EMPTY_STRING,
         val rememberMe: Boolean = true,

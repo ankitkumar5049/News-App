@@ -1,5 +1,6 @@
 package com.practise.newsapp.presentation.screens.register.signup
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,9 +29,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewModelScope
 import com.practise.newsapp.common.dimensions.dimen_mdpi
 import com.practise.newsapp.common.utils.CommonContentDescription
 import com.practise.newsapp.common.utils.CommonString
@@ -40,8 +43,11 @@ import com.practise.newsapp.presentation.uiComponents.CommonButton
 import com.practise.newsapp.presentation.uiComponents.CommonTextField
 import com.practise.newsapp.presentation.uiComponents.CommonTextInputFields
 import com.practise.newsapp.presentation.uiComponents.HeadingText
+import com.practise.newsapp.presentation.uiComponents.LogoPulseLoader
 import com.practise.newsapp.presentation.uiComponents.SubHeadingText
+import com.practise.newsapp.presentation.uiComponents.WaitScreen
 import com.practise.newsapp.ui.theme.NewsAppTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun SignupScreen(
@@ -50,6 +56,7 @@ fun SignupScreen(
 ) {
     var showPassword by remember { mutableStateOf(false) }
     var visible by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         visible = true
@@ -62,7 +69,11 @@ fun SignupScreen(
                     .fillMaxSize()
                     .background(NewsAppTheme.customColors.background)
                     .padding(innerPadding)
-                    .padding(start = dimen_mdpi.x_2_0, end = dimen_mdpi.x_2_0, top = dimen_mdpi.x_2_0)
+                    .padding(
+                        start = dimen_mdpi.x_2_0,
+                        end = dimen_mdpi.x_2_0,
+                        top = dimen_mdpi.x_2_0
+                    )
             ) {
 
                 SlideInVertically(
@@ -99,6 +110,21 @@ fun SignupScreen(
                     maxChar = 20,
                     labelAsteriskRequired = true,
                     borderColor = if(viewModel.state.username.length in 1..3) Color.Red else NewsAppTheme.customColors.border,
+                )
+                Spacer(modifier = Modifier.height(dimen_mdpi.x_1_25))
+
+                CommonTextInputFields(
+                    value = viewModel.state.email,
+                    onValueChange = {
+                        viewModel.state = viewModel.state.copy(
+                            email = it
+                        )
+                    },
+                    labelString = CommonString.EMAIL,
+                    semanticName = CommonString.EMAIL,
+                    maxChar = 30,
+                    labelAsteriskRequired = true,
+                    borderColor = if(viewModel.state.email.length in 1..5) Color.Red else NewsAppTheme.customColors.border,
                 )
 
                 Spacer(modifier = Modifier.height(dimen_mdpi.x_1_25))
@@ -175,6 +201,21 @@ fun SignupScreen(
                     buttonModifier = Modifier
                         .padding(bottom = dimen_mdpi.x_32_dp),
                     onClick = {
+                        viewModel.viewModelScope.launch {
+                            viewModel.createNewUser(
+                                viewModel.state.username,
+                                viewModel.state.email,
+                                viewModel.state.password,
+                                onResult = {
+                                    navigate(
+                                        NavigationItem.Home.route,
+                                        true,
+                                        NavigationItem.Signup.route,
+                                        true
+                                    )
+                                }
+                            )
+                        }
 
                     }
                 )
@@ -203,6 +244,10 @@ fun SignupScreen(
 
                     )
                 }
+            }
+
+            if(viewModel.apiState.isLoading){
+                WaitScreen()
             }
         }
     }

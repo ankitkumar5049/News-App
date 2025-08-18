@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.implementation
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -112,5 +114,9 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
     // To use Kotlin annotation processing tool (kapt)
     ksp("androidx.room:room-compiler:$room_version")
+
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))// older BOM
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore")
 
 }

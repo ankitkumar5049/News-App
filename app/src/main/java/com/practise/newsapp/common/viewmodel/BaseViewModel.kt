@@ -5,6 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.practise.newsapp.common.utils.ApiState
 import com.practise.newsapp.common.utils.Constants
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +21,8 @@ open class BaseViewModel: ViewModel() {
 
     var apiState by mutableStateOf(ApiState())
     private var apiJob: Job? = null
+    val db = FirebaseFirestore.getInstance()
+    var auth: FirebaseAuth = Firebase.auth
 
     protected fun <T> apiCallWithJob(
         key: String = Constants.EMPTY_STRING,
