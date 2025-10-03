@@ -18,15 +18,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Help
 import androidx.compose.material.icons.filled.BrokenImage
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -53,6 +61,7 @@ import com.practise.newsapp.common.dimensions.dimen_mdpi
 import com.practise.newsapp.common.dimensions.dimen_xhdpi
 import com.practise.newsapp.common.utils.Constants
 import com.practise.newsapp.domain.Articles
+import com.practise.newsapp.ui.theme.BluePrimary
 import com.practise.newsapp.ui.theme.NewsAppTheme
 import com.practise.newsapp.ui.theme.NewsAppTheme.fontSizes
 
@@ -362,4 +371,67 @@ fun ShowNewsDescBottomSheet(
         }
     }
 }
+
+@Composable
+fun AppDrawer(
+    onItemClick: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    ModalDrawerSheet {
+        Column(
+            modifier = modifier
+                .padding(horizontal = 16.dp)
+                .verticalScroll(rememberScrollState())
+        ) {
+            Spacer(Modifier.height(12.dp))
+            Text(
+                "Welcome!",
+                color = BluePrimary,
+                modifier = Modifier.padding(16.dp),
+                style = MaterialTheme.typography.titleLarge
+            )
+            HorizontalDivider()
+
+            Text(
+                "Profile Details",
+                color = NewsAppTheme.customColors.textPrimary,
+                modifier = Modifier.padding(16.dp),
+                style = MaterialTheme.typography.titleMedium
+            )
+            NavigationDrawerItem(
+                label = { Text("Edit Profile") },
+                selected = false,
+                onClick = { onItemClick("item1") }
+            )
+            NavigationDrawerItem(
+                label = { Text("Edit Password") },
+                selected = false,
+                onClick = { onItemClick("item2") }
+            )
+
+            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+
+            Text(
+                "Settings and Help",
+                color = NewsAppTheme.customColors.textPrimary,
+                modifier = Modifier.padding(16.dp),
+                style = MaterialTheme.typography.titleMedium
+            )
+            NavigationDrawerItem(
+                label = { Text("Settings") },
+                selected = false,
+                icon = { Icon(Icons.Outlined.Settings, contentDescription = null) },
+                onClick = { onItemClick("settings") }
+            )
+            NavigationDrawerItem(
+                label = { Text("Help and feedback") },
+                selected = false,
+                icon = { Icon(Icons.AutoMirrored.Outlined.Help, contentDescription = null) },
+                onClick = { onItemClick("help") }
+            )
+            Spacer(Modifier.height(12.dp))
+        }
+    }
+}
+
 

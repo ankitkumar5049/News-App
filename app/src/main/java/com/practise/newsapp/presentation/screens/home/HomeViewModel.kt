@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.practise.newsapp.common.viewmodel.BaseViewModel
+import com.practise.newsapp.domain.Articles
 import com.practise.newsapp.domain.api.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val repository: MainRepository
 ) : BaseViewModel() {
+    private val newsCache = mutableMapOf<String, List<Articles>>()
 
     var state by mutableStateOf(HomeContract.state())
     private var searchJob: Job? = null
@@ -29,6 +31,11 @@ class HomeViewModel @Inject constructor(
         fromDate: String = formattedDate,
         apiKey: String = "81fa24457e154a7a844c37bdb5e1c168"
     ) {
+
+        newsCache[query]?.let { cachedArticles ->
+            state = state.copy(articles = cachedArticles)
+            return
+        }
         apiCallWithJob(
             api = {
                 repository.getNews(
