@@ -11,4 +11,8 @@ class SignupContract{
         val passwordError: String = Constants.EMPTY_STRING,
         val rememberMe: Boolean = true,
         )
+
+    sealed class Effect{
+        object LaunchHomeScreen: Effect()
+    }
 }

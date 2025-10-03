@@ -47,6 +47,8 @@ import com.practise.newsapp.presentation.uiComponents.LogoPulseLoader
 import com.practise.newsapp.presentation.uiComponents.SubHeadingText
 import com.practise.newsapp.presentation.uiComponents.WaitScreen
 import com.practise.newsapp.ui.theme.NewsAppTheme
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 @Composable
@@ -60,6 +62,21 @@ fun SignupScreen(
 
     LaunchedEffect(Unit) {
         visible = true
+    }
+
+    LaunchedEffect(viewModel.effects.receiveAsFlow()) {
+        viewModel.effects.receiveAsFlow().onEach { effect ->
+            when (effect) {
+                SignupContract.Effect.LaunchHomeScreen -> {
+                    navigate(
+                        NavigationItem.Home.route,
+                        true,
+                        NavigationItem.Signup.route,
+                        true
+                    )
+                }
+            }
+        }
     }
 
     Box {
@@ -207,6 +224,9 @@ fun SignupScreen(
                                 viewModel.state.email,
                                 viewModel.state.password,
                                 onResult = {
+                                    viewModel.viewModelScope.launch {
+                                        viewModel.effects.send(SignupContract.Effect.LaunchHomeScreen)
+                                    }
                                     navigate(
                                         NavigationItem.Home.route,
                                         true,

@@ -8,11 +8,13 @@ import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.practise.newsapp.common.utils.CommonString
 import com.practise.newsapp.common.viewmodel.BaseViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class SignupViewModel @Inject constructor() : BaseViewModel() {
     var state by mutableStateOf(SignupContract.State())
+    var effects = Channel<SignupContract.Effect>(Channel.UNLIMITED)
 
     suspend fun createNewUser(
         username: String,

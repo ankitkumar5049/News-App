@@ -60,8 +60,17 @@ fun LoginScreen(
     LaunchedEffect(viewModel.effects.receiveAsFlow()) {
         viewModel.effects.receiveAsFlow().onEach { effect ->
             when (effect) {
-                LoginContract.Effect.LaunchHomeScreen -> TODO()
-                LoginContract.Effect.LaunchForgotPasswordScreen -> TODO()
+                LoginContract.Effect.LaunchHomeScreen -> {
+                    navigate(
+                        NavigationItem.Home.route,
+                        true,
+                        NavigationItem.Signup.route,
+                        true
+                    )
+                }
+                LoginContract.Effect.LaunchForgotPasswordScreen -> {
+
+                }
                 LoginContract.Effect.LaunchSignUpScreen -> {
                     navigate(
                         NavigationItem.Signup.route,
