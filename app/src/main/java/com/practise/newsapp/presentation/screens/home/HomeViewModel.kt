@@ -3,11 +3,10 @@ package com.practise.newsapp.presentation.screens.home
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.practise.newsapp.common.utils.NetworkMonitor
 import com.practise.newsapp.common.viewmodel.BaseViewModel
-import com.practise.newsapp.domain.Articles
 import com.practise.newsapp.domain.api.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -15,13 +14,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: MainRepository
+    private val repository: MainRepository,
+    private val networkMonitor: NetworkMonitor
 ) : BaseViewModel() {
-    private val newsCache = mutableMapOf<String, List<Articles>>()
 
     var state by mutableStateOf(HomeContract.state())
-    private var searchJob: Job? = null
-
+    val isConnected = networkMonitor.isConnected
 
     val formattedDate = getYesterdayDate()
 
@@ -32,10 +30,6 @@ class HomeViewModel @Inject constructor(
         apiKey: String = "81fa24457e154a7a844c37bdb5e1c168"
     ) {
 
-        newsCache[query]?.let { cachedArticles ->
-            state = state.copy(articles = cachedArticles)
-            return
-        }
         apiCallWithJob(
             api = {
                 repository.getNews(
@@ -55,9 +49,6 @@ class HomeViewModel @Inject constructor(
                     isApiSuccessful = false,
                     showErrorBottomSheet = true
                 )
-            },
-            apiJobCallback = { job ->
-                searchJob = job
             }
         )
     }

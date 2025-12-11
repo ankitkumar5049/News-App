@@ -1,5 +1,6 @@
 package com.practise.newsapp.presentation.screens.home
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -39,6 +40,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,6 +49,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.practise.newsapp.common.dimensions.dimen_mdpi
@@ -76,11 +79,20 @@ fun HomeScreen(
     var selectedHeadlineIndex by remember { mutableStateOf(0) }
     var selectedArticle by remember { mutableStateOf<Articles?>(null) }
     val pagerState = rememberPagerState(initialPage = 0, pageCount = { headlines.size })
+    val isConnected by viewmodel.isConnected.collectAsState(initial = true)
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewmodel.getNews(
             query = selectedHeadline ?: "Trending",
         )
+    }
+
+    LaunchedEffect(isConnected) {
+        if (!isConnected) {
+            Toast.makeText(context, "No Internet!!", Toast.LENGTH_LONG).show()
+        }
+
     }
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)

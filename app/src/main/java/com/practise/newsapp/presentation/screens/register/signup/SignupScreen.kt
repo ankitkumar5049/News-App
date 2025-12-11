@@ -1,6 +1,5 @@
 package com.practise.newsapp.presentation.screens.register.signup
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -37,13 +36,15 @@ import androidx.lifecycle.viewModelScope
 import com.practise.newsapp.common.dimensions.dimen_mdpi
 import com.practise.newsapp.common.utils.CommonContentDescription
 import com.practise.newsapp.common.utils.CommonString
+import com.practise.newsapp.common.utils.isStrongPassword
+import com.practise.newsapp.common.utils.isValidEmail
+import com.practise.newsapp.common.utils.isValidUserName
 import com.practise.newsapp.navigation.NavigationItem
 import com.practise.newsapp.presentation.animations.SlideInVertically
 import com.practise.newsapp.presentation.uiComponents.CommonButton
 import com.practise.newsapp.presentation.uiComponents.CommonTextField
 import com.practise.newsapp.presentation.uiComponents.CommonTextInputFields
 import com.practise.newsapp.presentation.uiComponents.HeadingText
-import com.practise.newsapp.presentation.uiComponents.LogoPulseLoader
 import com.practise.newsapp.presentation.uiComponents.SubHeadingText
 import com.practise.newsapp.presentation.uiComponents.WaitScreen
 import com.practise.newsapp.ui.theme.NewsAppTheme
@@ -126,7 +127,7 @@ fun SignupScreen(
                     semanticName = CommonString.USERNAME,
                     maxChar = 20,
                     labelAsteriskRequired = true,
-                    borderColor = if(viewModel.state.username.length in 1..3) Color.Red else NewsAppTheme.customColors.border,
+                    borderColor = if(viewModel.state.username.isNotEmpty() && !isValidUserName(viewModel.state.username)) Color.Red else NewsAppTheme.customColors.border,
                 )
                 Spacer(modifier = Modifier.height(dimen_mdpi.x_1_25))
 
@@ -141,7 +142,7 @@ fun SignupScreen(
                     semanticName = CommonString.EMAIL,
                     maxChar = 30,
                     labelAsteriskRequired = true,
-                    borderColor = if(viewModel.state.email.length in 1..5) Color.Red else NewsAppTheme.customColors.border,
+                    borderColor = if(viewModel.state.email.isNotEmpty() && !isValidEmail(viewModel.state.email)) Color.Red else NewsAppTheme.customColors.border,
                 )
 
                 Spacer(modifier = Modifier.height(dimen_mdpi.x_1_25))
@@ -173,7 +174,7 @@ fun SignupScreen(
                         )
                     },
                     enforceVisualTransformation = true,
-                    borderColor = if(viewModel.state.password.length in 1..3) Color.Red else NewsAppTheme.customColors.border,
+                    borderColor = if(viewModel.state.password.isNotEmpty() && !isStrongPassword( viewModel.state.password)) Color.Red else NewsAppTheme.customColors.border,
                     visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
                 )
 
