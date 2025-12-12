@@ -53,4 +53,10 @@ class SignupViewModel @Inject constructor() : BaseViewModel() {
             )
         }
     }
+
+    fun isFilled(): Boolean{
+        return state.username.isNotEmpty() &&
+                state.password.isNotEmpty() &&
+                state.email.isNotEmpty()
+    }
 }

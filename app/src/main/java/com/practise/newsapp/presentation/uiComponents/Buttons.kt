@@ -44,8 +44,8 @@ fun CommonButton(
     colors: ButtonColors = ButtonDefaults.buttonColors(
         contentColor = customColors.buttonTextPrimary,
         containerColor = customColors.primary,
-        disabledContentColor = customColors.primary,
-        disabledContainerColor = customColors.primary,
+        disabledContentColor = customColors.buttonTextPrimary.copy(alpha = 0.6f),
+        disabledContainerColor = customColors.primary.copy(alpha = 0.6f)
     ),
     maxLine: Int = Constants.MAX_LINE,
     buttonContent: String = Constants.EMPTY_STRING,

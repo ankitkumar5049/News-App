@@ -22,6 +22,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Help
+import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.filled.BrokenImage
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Card
@@ -60,6 +61,7 @@ import com.practise.newsapp.R
 import com.practise.newsapp.common.dimensions.dimen_mdpi
 import com.practise.newsapp.common.dimensions.dimen_xhdpi
 import com.practise.newsapp.common.utils.Constants
+import com.practise.newsapp.common.utils.LocalStrings
 import com.practise.newsapp.domain.Articles
 import com.practise.newsapp.ui.theme.BluePrimary
 import com.practise.newsapp.ui.theme.NewsAppTheme
@@ -385,7 +387,7 @@ fun AppDrawer(
         ) {
             Spacer(Modifier.height(12.dp))
             Text(
-                "Welcome!",
+                text = LocalStrings.WELCOME,
                 color = BluePrimary,
                 modifier = Modifier.padding(16.dp),
                 style = MaterialTheme.typography.titleLarge
@@ -393,41 +395,55 @@ fun AppDrawer(
             HorizontalDivider()
 
             Text(
-                "Profile Details",
+                text = LocalStrings.PROFILE_DETAILS,
                 color = NewsAppTheme.customColors.textPrimary,
                 modifier = Modifier.padding(16.dp),
                 style = MaterialTheme.typography.titleMedium
             )
             NavigationDrawerItem(
-                label = { Text("Edit Profile") },
+                label = { Text(
+                    text = LocalStrings.EDIT_PROFILE
+                ) },
                 selected = false,
-                onClick = { onItemClick("item1") }
+                onClick = { onItemClick(LocalStrings.EDIT_PROFILE) }
             )
             NavigationDrawerItem(
-                label = { Text("Edit Password") },
+                label = { Text(
+                    text = LocalStrings.EDIT_PASSWORD
+                ) },
                 selected = false,
-                onClick = { onItemClick("item2") }
+                onClick = { onItemClick(LocalStrings.EDIT_PASSWORD) }
             )
 
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
             Text(
-                "Settings and Help",
+                text = LocalStrings.SETTINGS_AND_HELP,
                 color = NewsAppTheme.customColors.textPrimary,
                 modifier = Modifier.padding(16.dp),
                 style = MaterialTheme.typography.titleMedium
             )
             NavigationDrawerItem(
-                label = { Text("Settings") },
+                label = { Text(
+                    text = LocalStrings.SETTINGS
+                ) },
                 selected = false,
                 icon = { Icon(Icons.Outlined.Settings, contentDescription = null) },
-                onClick = { onItemClick("settings") }
+                onClick = { onItemClick(
+                    LocalStrings.SETTINGS
+                ) }
             )
             NavigationDrawerItem(
-                label = { Text("Help and feedback") },
+                label = { Text(text = LocalStrings.HELP_AND_FEEDBACK) },
                 selected = false,
                 icon = { Icon(Icons.AutoMirrored.Outlined.Help, contentDescription = null) },
-                onClick = { onItemClick("help") }
+                onClick = { onItemClick(LocalStrings.HELP_AND_FEEDBACK) }
+            )
+            NavigationDrawerItem(
+                label = { Text(text = LocalStrings.LOGOUT) },
+                selected = false,
+                icon = { Icon(Icons.AutoMirrored.Outlined.Logout, contentDescription = null) },
+                onClick = { onItemClick(LocalStrings.LOGOUT) }
             )
             Spacer(Modifier.height(12.dp))
         }

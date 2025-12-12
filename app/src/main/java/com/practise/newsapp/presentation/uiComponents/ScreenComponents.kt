@@ -17,12 +17,15 @@ fun WaitScreen(
     message: String = CommonString.PLEASE_WAIT,
     isBackButtonEnabled: Boolean = false
 ) {
-    Surface(modifier = Modifier.fillMaxSize(), color = Color.Black.copy(alpha = 0.7f)) {
+    Surface(
+        modifier = Modifier.fillMaxSize()
+            .background(color = NewsAppTheme.customColors.background)
+        , color = Color.Black.copy(alpha = 0.7f)) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.background(
-                NewsAppTheme.customColors.textFieldBackground
+                NewsAppTheme.customColors.background
             )
         ) {
             LogoPulseLoader()

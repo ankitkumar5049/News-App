@@ -2,37 +2,22 @@ package com.practise.newsapp.presentation.screens.home
 
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.Help
 import androidx.compose.material.icons.outlined.FilterAlt
-import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
@@ -48,17 +33,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.practise.newsapp.common.dimensions.dimen_mdpi
 import com.practise.newsapp.common.utils.CommonContentDescription
+import com.practise.newsapp.common.utils.LocalStrings
 import com.practise.newsapp.domain.Articles
 import com.practise.newsapp.navigation.NavigationItem
 import com.practise.newsapp.presentation.uiComponents.AppDrawer
-import com.practise.newsapp.presentation.uiComponents.HeadlineCard
-import com.practise.newsapp.presentation.uiComponents.LogoPulseLoader
 import com.practise.newsapp.presentation.uiComponents.NewsCard
 import com.practise.newsapp.presentation.uiComponents.NewsTopBar
 import com.practise.newsapp.presentation.uiComponents.SearchBarInputField
@@ -103,10 +85,19 @@ fun HomeScreen(
             AppDrawer(
                 onItemClick = { item ->
                     when (item) {
-                        "item1" -> { /* Navigate or action */ }
-                        "item2" -> { /* Navigate or action */ }
-                        "settings" -> { /* Navigate to settings */ }
-                        "help" -> { /* Navigate to help */ }
+                        LocalStrings.EDIT_PROFILE -> { /* Navigate or action */ }
+                        LocalStrings.EDIT_PASSWORD -> { /* Navigate or action */ }
+                        LocalStrings.SETTINGS -> { /* Navigate to settings */ }
+                        LocalStrings.HELP_AND_FEEDBACK -> { /* Navigate to help */ }
+                        LocalStrings.LOGOUT -> {
+                            viewmodel.signout()
+                            navigate(
+                                NavigationItem.Login.route,
+                                true,
+                                NavigationItem.Home.route,
+                                true
+                            )
+                        }
                     }
                     scope.launch { drawerState.close() } // close after selection
                 }
@@ -177,7 +168,7 @@ fun HomeScreen(
                         ScrollableTabRow(
                             modifier = Modifier.padding(
                                 bottom = dimen_mdpi.x_2_0
-                            ),
+                            ).background(color = NewsAppTheme.customColors.background),
                             selectedTabIndex = pagerState.currentPage,
                             edgePadding = 0.dp
                         ) {

@@ -3,6 +3,7 @@ package com.practise.newsapp.presentation.screens.home
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.google.firebase.auth.FirebaseAuth
 import com.practise.newsapp.common.utils.NetworkMonitor
 import com.practise.newsapp.common.viewmodel.BaseViewModel
 import com.practise.newsapp.domain.api.MainRepository
@@ -60,5 +61,9 @@ class HomeViewModel @Inject constructor(
 
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         return formatter.format(calendar.time)
+    }
+
+    fun signout(){
+        FirebaseAuth.getInstance().signOut()
     }
 }

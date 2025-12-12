@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
@@ -28,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -42,6 +45,7 @@ import com.practise.newsapp.presentation.uiComponents.CommonTextInputFields
 import com.practise.newsapp.presentation.uiComponents.HeadingText
 import com.practise.newsapp.presentation.uiComponents.SubHeadingText
 import com.practise.newsapp.ui.theme.NewsAppTheme
+import com.practise.newsapp.ui.theme.NewsAppTheme.customColors
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 
@@ -52,6 +56,7 @@ fun LoginScreen(
 ) {
     var showPassword by remember { mutableStateOf(false) }
     var visible by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         visible = true
@@ -227,14 +232,22 @@ fun LoginScreen(
                 CommonButton(
                     modifier = Modifier.fillMaxWidth(),
                     text = CommonString.LOGIN,
+                    enabled = viewModel.isFilled(),
                     buttonModifier = Modifier
                         .padding(bottom = dimen_mdpi.x_32_dp),
                     onClick = {
-                        navigate(
-                            NavigationItem.Home.route,
-                            true,
-                            NavigationItem.Login.route,
-                            true
+                        viewModel.login(
+                            email = viewModel.state.username,
+                            password = viewModel.state.password,
+                            context = context,
+                            onResult = {
+                                navigate(
+                                    NavigationItem.Home.route,
+                                    true,
+                                    NavigationItem.Login.route,
+                                    true
+                                )
+                            }
                         )
                     }
                 )

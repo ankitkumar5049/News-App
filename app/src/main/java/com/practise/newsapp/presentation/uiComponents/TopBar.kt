@@ -80,14 +80,17 @@ fun NewsTopBar(
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ){
-        IconButton(onClick = {
-            onHamburgerMenuClick?.invoke()
-        }) {
-            Image(
-                imageVector = Icons.Outlined.Menu,
-                contentDescription = "SideBar",
-                colorFilter = ColorFilter.tint(color = NewsAppTheme.customColors.surface)
-            )
+
+        if(showHamburgerIcon) {
+            IconButton(onClick = {
+                onHamburgerMenuClick?.invoke()
+            }) {
+                Image(
+                    imageVector = Icons.Outlined.Menu,
+                    contentDescription = "SideBar",
+                    colorFilter = ColorFilter.tint(color = NewsAppTheme.customColors.surface)
+                )
+            }
         }
 
         if(showBackButton){
@@ -110,7 +113,7 @@ fun NewsTopBar(
 
         Row(
             modifier = Modifier
-                .padding(start = if(showBackButton || showHamburgerIcon) NewsAppTheme.dimens.x_0_dp else NewsAppTheme.dimens.x_16_dp)
+                .padding(start = if (showBackButton || showHamburgerIcon) NewsAppTheme.dimens.x_0_dp else NewsAppTheme.dimens.x_16_dp)
                 .weight(Constants.FULL_OPACITY),
             horizontalArrangement = Arrangement.Start //if(showAppLogo) Arrangement.Center else Arrangement.Start
         ) {

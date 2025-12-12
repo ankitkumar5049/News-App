@@ -156,7 +156,7 @@ fun SignupScreen(
                     },
                     labelString = CommonString.PASSWORD,
                     semanticName = CommonString.PASSWORD,
-                    maxChar = 20,
+                    maxChar = 40,
                     labelAsteriskRequired = true,
                     trailingIcon = {
                         Icon(
@@ -216,6 +216,7 @@ fun SignupScreen(
                 CommonButton(
                     modifier = Modifier.fillMaxWidth(),
                     text = CommonString.SIGN_UP,
+                    enabled = viewModel.isFilled(),
                     buttonModifier = Modifier
                         .padding(bottom = dimen_mdpi.x_32_dp),
                     onClick = {
