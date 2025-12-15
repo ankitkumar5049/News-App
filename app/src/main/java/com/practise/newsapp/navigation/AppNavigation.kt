@@ -11,6 +11,7 @@ enum class Screen {
     LOGO_SCREEN,
     PROFILE,
     NOTIFICATION,
+    CHAT_LOGIN,
 }
 sealed class NavigationItem(val route: String) {
     object Home : NavigationItem(Screen.HOME.name)
@@ -23,5 +24,6 @@ sealed class NavigationItem(val route: String) {
     object LogoScreen : NavigationItem(Screen.LOGO_SCREEN.name)
     object Profile : NavigationItem(Screen.PROFILE.name)
     object Notification : NavigationItem(Screen.NOTIFICATION.name)
+    object ChatLogin : NavigationItem(Screen.CHAT_LOGIN.name)
 
 }

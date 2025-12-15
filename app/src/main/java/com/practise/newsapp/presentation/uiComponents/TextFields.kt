@@ -3,6 +3,7 @@ package com.practise.newsapp.presentation.uiComponents
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,12 +12,23 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.CalendarToday
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -274,7 +286,12 @@ fun CommonTextField(
     inputText: String,
     clickable: Boolean = false,
     link: String? = null,
+    textAlign: TextAlign = TextAlign.Center,
     isLink: Boolean = false,
+    style: TextStyle = LocalTextStyle.current.copy(
+        fontWeight = FontWeight.Normal,
+        fontSize = NewsAppTheme.fontSizes.x_1_25,
+    ),
     onClick: () -> Unit? = {},
     modifier: Modifier,
     contentColor: Color = customColors.textPrimary
@@ -282,11 +299,8 @@ fun CommonTextField(
     Text(
         text = inputText,
         color = if(isLink) customColors.primary else contentColor,
-        textAlign = TextAlign.Center,
-        style = LocalTextStyle.current.copy(
-            fontWeight = FontWeight.Normal,
-            fontSize = NewsAppTheme.fontSizes.x_1_25,
-        ),
+        textAlign = textAlign,
+        style = style,
         modifier = if(clickable) Modifier.clickable {
             onClick()
         } else Modifier.then(modifier)
@@ -318,3 +332,335 @@ fun SubtitleText(
         textDecoration =textDecoration
     )
 }
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CommonDropdownField(
+    modifier: Modifier = Modifier,
+    rowModifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    selectedValue: String,
+    options: List<String>,
+    onValueSelected: (String) -> Unit,
+    labelString: String = Constants.EMPTY_STRING,
+    labelTextColor: Color? = null,
+    backgroundColor: Color = customColors.textFieldBackground,
+    borderColor: Color = Color.Black,
+    errorText: String = Constants.EMPTY_STRING,
+    errorTextColor: Color = MaterialTheme.colorScheme.error,
+    semanticName: String,
+    labelAsteriskRequired: Boolean = false,
+    trailingIcon: @Composable (() -> Unit)? = {
+        Icon(
+            imageVector = Icons.Default.ArrowDropDown,
+            contentDescription = null
+        )
+    },
+    textFieldColors: TextFieldColors = TextFieldDefaults.colors(
+        disabledIndicatorColor = Color.Transparent,
+        focusedIndicatorColor = Color.Transparent,
+        unfocusedIndicatorColor = Color.Transparent,
+        disabledContainerColor = Color.Transparent,
+        focusedContainerColor = Color.Transparent,
+        unfocusedContainerColor = Color.Transparent
+    )
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Row(modifier = rowModifier) {
+        Column {
+            // Label
+            Text(
+                buildAnnotatedString {
+                    append(labelString)
+                    if (labelAsteriskRequired) {
+                        withStyle(style = SpanStyle(color = Color.Red)) { append("*") }
+                    }
+                },
+                style = MaterialTheme.typography.bodySmall,
+                color = labelTextColor ?: customColors.secondPrimary
+            )
+
+            Spacer(Modifier.height(dimen_mdpi.x_0_75))
+
+            ExposedDropdownMenuBox(
+                expanded = expanded,
+                onExpandedChange = { if (enabled) expanded = !expanded }
+            ) {
+                TextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .menuAnchor()
+                        .clip(RoundedCornerShape(dimens.x_4_dp))
+                        .background(backgroundColor)
+                        .border(
+                            width = dimens.x_1_dp,
+                            color = borderColor,
+                            shape = RoundedCornerShape(dimens.x_4_dp)
+                        )
+                        .semantics { contentDescription = semanticName }
+                        .then(modifier),
+                    value = selectedValue,
+                    onValueChange = {},
+                    readOnly = true,
+                    enabled = enabled,
+                    trailingIcon = trailingIcon,
+                    isError = errorText.isNotEmpty(),
+                    textStyle = MaterialTheme.typography.bodySmall,
+                    colors = textFieldColors
+                )
+
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    options.forEach { option ->
+                        DropdownMenuItem(
+                            text = { Text(option) },
+                            onClick = {
+                                onValueSelected(option)
+                                expanded = false
+                            }
+                        )
+                    }
+                }
+            }
+
+            if (errorText.isNotEmpty()) {
+                Text(
+                    text = "! $errorText",
+                    modifier = Modifier.padding(top = dimen_mdpi.x_0_75),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = errorTextColor
+                )
+            }
+        }
+    }
+}
+
+
+/*@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CommonDatePickerField(
+    modifier: Modifier = Modifier,
+    rowModifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    selectedDate: String,
+    onDateSelected: (String) -> Unit,
+    labelString: String = Constants.EMPTY_STRING,
+    labelTextColor: Color? = null,
+    backgroundColor: Color = customColors.textFieldBackground,
+    borderColor: Color = Color.Black,
+    errorText: String = Constants.EMPTY_STRING,
+    errorTextColor: Color = MaterialTheme.colorScheme.error,
+    semanticName: String,
+    labelAsteriskRequired: Boolean = false,
+    dateFormatter: (Long) -> String,
+    trailingIcon: @Composable (() -> Unit)? = {
+        Icon(
+            imageVector = Icons.Default.CalendarToday,
+            contentDescription = null
+        )
+    },
+    textFieldColors: TextFieldColors = TextFieldDefaults.colors(
+        disabledIndicatorColor = Color.Transparent,
+        focusedIndicatorColor = Color.Transparent,
+        unfocusedIndicatorColor = Color.Transparent,
+        disabledContainerColor = Color.Transparent,
+        focusedContainerColor = Color.Transparent,
+        unfocusedContainerColor = Color.Transparent
+    )
+) {
+    var showDialog by remember { mutableStateOf(false) }
+    val datePickerState = rememberDatePickerState()
+
+    Row(modifier = rowModifier) {
+        Column {
+            // Label
+            Text(
+                buildAnnotatedString {
+                    append(labelString)
+                    if (labelAsteriskRequired) {
+                        withStyle(style = SpanStyle(color = Color.Red)) { append("*") }
+                    }
+                },
+                style = MaterialTheme.typography.bodySmall,
+                color = labelTextColor ?: customColors.secondPrimary
+            )
+
+            Spacer(Modifier.height(dimen_mdpi.x_0_75))
+
+            TextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(dimens.x_4_dp))
+                    .background(backgroundColor)
+                    .border(
+                        width = dimens.x_1_dp,
+                        color = borderColor,
+                        shape = RoundedCornerShape(dimens.x_4_dp)
+                    )
+                    .clickable(enabled = enabled) { showDialog = true }
+                    .semantics { contentDescription = semanticName }
+                    .then(modifier),
+                value = selectedDate,
+                onValueChange = {},
+                readOnly = true,
+                enabled = enabled,
+                trailingIcon = trailingIcon,
+                isError = errorText.isNotEmpty(),
+                textStyle = MaterialTheme.typography.bodySmall,
+                colors = textFieldColors
+            )
+
+            if (errorText.isNotEmpty()) {
+                Text(
+                    text = "! $errorText",
+                    modifier = Modifier.padding(top = dimen_mdpi.x_0_75),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = errorTextColor
+                )
+            }
+        }
+    }
+
+    if (showDialog) {
+        DatePickerDialog(
+            onDismissRequest = { showDialog = false },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        datePickerState.selectedDateMillis?.let {
+                            onDateSelected(dateFormatter(it))
+                        }
+                        showDialog = false
+                    }
+                ) { Text("OK") }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        ) {
+            DatePicker(state = datePickerState)
+        }
+    }
+}*/
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CommonDatePickerField(
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    selectedDate: String,
+    onDateSelected: (String) -> Unit,
+    backgroundColor: Color = customColors.textFieldBackground,
+    labelString: String,
+    semanticName: String,
+    labelAsteriskRequired: Boolean = false,
+    errorText: String = Constants.EMPTY_STRING,
+    dateFormatter: (Long) -> String,
+    trailingIcon: @Composable (() -> Unit)? = {
+        Icon(
+            imageVector = Icons.Default.CalendarToday,
+            contentDescription = null
+        )
+    },
+    textFieldColors: TextFieldColors = TextFieldDefaults.colors(
+        disabledTextColor = Color.White,
+        disabledIndicatorColor = Color.Transparent,
+        focusedIndicatorColor = Color.Transparent,
+        unfocusedIndicatorColor = Color.Transparent,
+        disabledContainerColor = Color.Transparent,
+        focusedContainerColor = Color.Transparent,
+        unfocusedContainerColor = Color.Transparent
+    )
+) {
+    var showDialog by remember { mutableStateOf(false) }
+    val datePickerState = rememberDatePickerState()
+
+    Column {
+
+        // Label
+        Text(
+            buildAnnotatedString {
+                append(labelString)
+                if (labelAsteriskRequired) {
+                    withStyle(style = SpanStyle(color = Color.Red)) {
+                        append("*")
+                    }
+                }
+            },
+            style = MaterialTheme.typography.bodySmall,
+            color = customColors.secondPrimary
+        )
+
+        Spacer(Modifier.height(dimen_mdpi.x_0_75))
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(backgroundColor)
+                .clip(RoundedCornerShape(dimens.x_4_dp))
+                .border(
+                    width = dimens.x_1_dp,
+                    color = Color.Black,
+                    shape = RoundedCornerShape(dimens.x_4_dp)
+                )
+                .clickable(enabled = enabled) {
+                    showDialog = true
+                }
+                .semantics { contentDescription = semanticName }
+        ) {
+
+            TextField(
+                value = selectedDate,
+                onValueChange = {},
+                readOnly = true,
+                enabled = false,
+                trailingIcon = trailingIcon,
+                textStyle = MaterialTheme.typography.bodySmall,
+                colors = textFieldColors,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
+        if (errorText.isNotEmpty()) {
+            Text(
+                text = "! $errorText",
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(top = dimen_mdpi.x_0_75)
+            )
+        }
+    }
+
+    /** Date Picker Dialog */
+    if (showDialog) {
+        DatePickerDialog(
+            onDismissRequest = { showDialog = false },
+            confirmButton = {
+                TextButton(onClick = {
+                    datePickerState.selectedDateMillis?.let {
+                        onDateSelected(dateFormatter(it))
+                    }
+                    showDialog = false
+                }) {
+                    Text("OK")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        ) {
+            DatePicker(state = datePickerState)
+        }
+    }
+}
+
+
+

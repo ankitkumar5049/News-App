@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import com.practise.newsapp.common.dimensions.dimen_mdpi
 import com.practise.newsapp.common.utils.CommonContentDescription
 import com.practise.newsapp.common.utils.CommonString
+import com.practise.newsapp.common.utils.LocalStrings
 import com.practise.newsapp.navigation.NavigationItem
 import com.practise.newsapp.presentation.animations.SlideInHorizontally
 import com.practise.newsapp.presentation.uiComponents.CommonButton
@@ -275,6 +276,26 @@ fun LoginScreen(
                         }
                     )
                 }
+
+                Spacer(modifier = Modifier.height(dimen_mdpi.x_0_75))
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CommonTextField(
+                        inputText = LocalStrings.LETS_CHAT,
+                        isLink = true,
+                        modifier = Modifier.clickable {
+                            navigate(
+                                NavigationItem.ChatLogin.route,
+                                false,
+                                NavigationItem.Login.route,
+                                true
+                            )
+                        }
+                    )
+                }
+
             }
         }
     }

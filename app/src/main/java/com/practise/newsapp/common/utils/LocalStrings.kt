@@ -11,4 +11,12 @@ object LocalStrings {
     const val SETTINGS = "Settings"
     const val HELP_AND_FEEDBACK = "Help and Feedback"
     const val LOGOUT = "Logout"
+
+    /** Chat --------------------------------------*/
+    // Login
+    const val LETS_MAKE_NEW_FRIENDS = "Let's make new friends"
+    const val GENDER = "Gender"
+    const val DATE_OF_BIRTH = "Date of Birth"
+    const val LETS_CHAT = "Let's Chat"
+    const val TERMS_AND_CONDITIONS = "I agree to all terms and conditions as mentioned."
 }

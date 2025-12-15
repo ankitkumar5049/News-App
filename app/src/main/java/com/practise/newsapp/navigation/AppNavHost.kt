@@ -6,6 +6,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.practise.newsapp.presentation.screens.chat.login.ChatLoginScreen
+import com.practise.newsapp.presentation.screens.chat.login.ChatLoginViewModel
 import com.practise.newsapp.presentation.screens.home.HomeScreen
 import com.practise.newsapp.presentation.screens.home.HomeViewModel
 import com.practise.newsapp.presentation.screens.notification.NotificationScreen
@@ -104,6 +106,14 @@ fun AppNavHost(
 
         composable(NavigationItem.Notification.route) {
             NotificationScreen()
+        }
+
+        composable(NavigationItem.ChatLogin.route) {
+            val viewModel: ChatLoginViewModel = hiltViewModel()
+            ChatLoginScreen(
+                viewModel = viewModel,
+                navigate = navController::navigateWithOptionalPopUp,
+            )
         }
 
     }
