@@ -9,7 +9,7 @@ import javax.inject.Singleton
 class NetworkMonitor @Inject constructor(
     @ApplicationContext context: Context
 ) {
-    private val observer = NetworkConnectivityObserver(context)
-
-    val isConnected = observer.isConnected
+//    private val observer = NetworkConnectivityObserver(context)
+//
+//    val isConnected = observer.isConnected
 }

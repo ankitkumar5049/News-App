@@ -61,7 +61,7 @@ fun HomeScreen(
     var selectedHeadlineIndex by remember { mutableStateOf(0) }
     var selectedArticle by remember { mutableStateOf<Articles?>(null) }
     val pagerState = rememberPagerState(initialPage = 0, pageCount = { headlines.size })
-    val isConnected by viewmodel.isConnected.collectAsState(initial = true)
+//    val isConnected by viewmodel.isConnected.collectAsState(initial = true)
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
@@ -70,12 +70,12 @@ fun HomeScreen(
         )
     }
 
-    LaunchedEffect(isConnected) {
-        if (!isConnected) {
-            Toast.makeText(context, "No Internet!!", Toast.LENGTH_LONG).show()
-        }
-
-    }
+//    LaunchedEffect(isConnected) {
+//        if (!isConnected) {
+//            Toast.makeText(context, "No Internet!!", Toast.LENGTH_LONG).show()
+//        }
+//
+//    }
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()

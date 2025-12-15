@@ -12,9 +12,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Provides
-    @Singleton
-    fun provideNetworkObserver(@ApplicationContext context: Context): NetworkConnectivityObserver {
-        return NetworkConnectivityObserver(context)
-    }
+//    @Provides
+//    @Singleton
+//    fun provideNetworkObserver(@ApplicationContext context: Context): NetworkConnectivityObserver {
+//        return NetworkConnectivityObserver(context)
+//    }
 }

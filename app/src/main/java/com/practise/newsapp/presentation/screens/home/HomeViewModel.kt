@@ -20,7 +20,7 @@ class HomeViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     var state by mutableStateOf(HomeContract.state())
-    val isConnected = networkMonitor.isConnected
+//    val isConnected = networkMonitor.isConnected
 
     val formattedDate = getYesterdayDate()
 
